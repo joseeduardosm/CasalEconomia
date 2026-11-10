@@ -1,10 +1,9 @@
 /*
  * Layout AppShell do CasalEconomia.
  *
- * pq existe: Flexbox CSS — modelo de layout unidimensional que distribui
- *            espaço entre itens em linha ou coluna de forma responsiva.
- * para que no projeto: define a grade mestre: sidebar fixa à esquerda +
- *                      área de conteúdo que ocupa o restante da tela.
+ * pq existe: flex container que posiciona sidebar + área de conteúdo.
+ * para que no projeto: estrutura mestre — sidebar 220px fixa + corpo
+ *                      scrollável à direita; mobile: apenas conteúdo + nav inferior.
  */
 
 :host {
@@ -15,12 +14,12 @@
 .concha {
   display: flex;
   height: 100vh;
-  background-color: var(--color-stone-canvas);
+  background: var(--background);
   overflow: hidden;
 
   &__sidebar {
     flex-shrink: 0;
-    width: 220px;
+    width: var(--sidebar-width);
     height: 100vh;
   }
 
@@ -39,7 +38,6 @@
   &__conteudo {
     flex: 1;
     overflow-y: auto;
-    padding: 24px;
   }
 
   &__mobile {
@@ -49,19 +47,12 @@
 
 @media (max-width: 767px) {
   .concha {
-    flex-direction: column;
-
-    &__sidebar {
-      display: none;
-    }
+    &__sidebar { display: none; }
 
     &__conteudo {
-      padding: 16px;
-      padding-bottom: 72px;
+      padding-bottom: calc(60px + env(safe-area-inset-bottom));
     }
 
-    &__mobile {
-      display: flex;
-    }
+    &__mobile { display: flex; }
   }
 }

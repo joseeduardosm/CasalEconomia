@@ -1,48 +1,94 @@
-/* Tokens globais do sistema de design Seline Analytics — CasalEconomia */
+/*
+ * Design tokens globais do CasalEconomia.
+ *
+ * pq existe: variáveis CSS no :root disponibilizam o sistema de design
+ *            para todos os componentes sem dependência de pré-processador.
+ * para que no projeto: paleta coral/oklch, tipografia Geist e tokens de
+ *                      espaçamento, raio e sombra usados em toda a UI.
+ */
 
 :root {
-  /* Cores */
-  --color-stone-canvas:  #fafaf9;
-  --color-pure-white:    #ffffff;
-  --color-stone-border:  #e8e6e5;
-  --color-stone-muted:   #d6d3d1;
-  --color-ash-gray:      #a8a29e;
-  --color-warm-gray:     #78716c;
-  --color-ink-black:     #0c0a09;
-  --color-soot:          #1c1917;
-  --color-sky-wash:      #c1e1f7;
-  --color-cyan-signal:   #3ba6f1;
-  --color-cyan-edge:     #3398e1;
+  /* Paleta base */
+  --palette-coral:    oklch(76.042% 0.16904 61.306);   /* brand primário */
+  --palette-charcoal: oklch(29.182% 0.05685 64.634);   /* texto / foreground */
+  --palette-green:    oklch(51.858% 0.10354 157.143);  /* sucesso / receita */
+  --palette-red:      oklch(59.505% 0.2301 31.027);    /* erro / despesa */
+  --palette-blue:     oklch(59.101% 0.16978 254.626);  /* info */
+
+  /* Superfícies */
+  --background:       oklch(96.785% 0.00443 77.988);   /* fundo geral (warm off-white) */
+  --foreground:       var(--palette-charcoal);
+  --card:             var(--background);
+  --card-foreground:  var(--foreground);
+
+  /* Componentes */
+  --primary:           var(--palette-coral);
+  --primary-foreground: var(--palette-charcoal);
+  --secondary:         oklch(93.597% 0.01475 80.639);
+  --secondary-foreground: var(--foreground);
+  --muted:             var(--secondary);
+  --muted-foreground:  oklch(55% 0.03 70);
+  --accent:            color-mix(in oklch, var(--primary) 16%, var(--background));
+  --destructive:       color-mix(in oklch, var(--palette-red) 90%, var(--palette-charcoal));
+  --success:           var(--palette-green);
+  --warning:           oklch(74% 0.11 65);
+
+  /* Brand */
+  --brand:         var(--palette-coral);
+  --brand-strong:  color-mix(in oklch, var(--palette-coral) 65%, var(--palette-charcoal));
+  --brand-foreground: var(--palette-charcoal);
+
+  /* Bordas e inputs */
+  --border: oklch(26.033% 0.00003 271.152 / 0.18);
+  --input:  color-mix(in oklch, var(--palette-charcoal) 30%, var(--background));
+  --ring:   color-mix(in oklch, var(--primary) 50%, transparent);
 
   /* Tipografia */
-  --font-heading: 'Inter Tight', 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-body:    'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-heading: 'Geist', ui-sans-serif, system-ui, sans-serif;
+  --font-body:    'Geist', ui-sans-serif, system-ui, sans-serif;
+  --font-mono:    ui-monospace, 'Cascadia Code', monospace;
 
   /* Raios */
-  --radius-tags:         9999px;
-  --radius-cards:        10px;
-  --radius-icons:        4px;
-  --radius-inputs:       6px;
-  --radius-buttons:      9999px;
-  --radius-feature-card: 16px;
+  --radius:        0.75rem;   /* 12px */
+  --radius-sm:     0.5rem;    /* 8px */
+  --radius-md:     0.625rem;  /* 10px */
+  --radius-lg:     0.75rem;   /* 12px */
+  --radius-xl:     1rem;      /* 16px */
+  --radius-pill:   9999px;
+
+  /* Aliases para compatibilidade com componentes */
+  --color-brand:          var(--primary);
+  --color-border:         var(--border);
+  --color-bg-surface:     var(--card);
+  --color-bg-page:        var(--background);
+  --color-text-primary:   var(--foreground);
+  --color-text-secondary: var(--muted-foreground);
+  --radius-card:          var(--radius);
+  --radius-cards:         var(--radius);
+  --radius-input:         var(--radius-sm);
+  --radius-buttons:       var(--radius-pill);
+  --radius-tags:          var(--radius-pill);
+  --radius-icons:         0.25rem;
+  --shadow-card:          var(--shadow-md);
+
+  /* Aliases de cor legados (para componentes ainda não migrados) */
+  --color-stone-canvas:  var(--background);
+  --color-pure-white:    var(--card);
+  --color-stone-border:  var(--border);
+  --color-stone-muted:   var(--muted);
+  --color-ash-gray:      oklch(68% 0.015 70);
+  --color-warm-gray:     var(--muted-foreground);
+  --color-ink-black:     var(--foreground);
+  --color-soot:          oklch(20% 0.02 65);
+  --color-cyan-signal:   var(--primary);    /* era ciano, agora coral */
+  --color-sky-wash:      var(--accent);
 
   /* Sombras */
-  --shadow-md:     rgba(0, 0, 0, 0.05) 0px 4px 16px 0px;
-  --shadow-sm:     rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -2px;
-  --shadow-subtle: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
-  --shadow-xl:     rgba(17, 12, 46, 0.12) 0px 12px 45px 0px;
-
-  /* Aliases usados pelos componentes (mapeiam para os design tokens acima) */
-  --color-brand:          var(--color-cyan-signal);
-  --color-border:         var(--color-stone-border);
-  --color-bg-surface:     var(--color-pure-white);
-  --color-bg-page:        var(--color-stone-canvas);
-  --color-text-primary:   var(--color-ink-black);
-  --color-text-secondary: var(--color-warm-gray);
-  --radius-pill:          var(--radius-buttons);
-  --radius-card:          var(--radius-cards);
-  --radius-input:         var(--radius-inputs);
-  --shadow-card:          var(--shadow-md);
+  --shadow-sm:  0 1px 2px oklch(0% 0 0 / 0.08);
+  --shadow-md:  0 2px 10px color-mix(in oklch, var(--foreground) 10%, transparent);
+  --shadow-lg:  0 4px 24px oklch(0% 0 0 / 0.1);
+  --shadow-xl:  0 12px 48px oklch(0% 0 0 / 0.12);
+  --shadow-subtle: 0 1px 2px oklch(0% 0 0 / 0.05);
 
   /* Espaçamentos */
   --spacing-4:   4px;
@@ -54,9 +100,39 @@
   --spacing-40:  40px;
   --spacing-48:  48px;
   --spacing-64:  64px;
-  --spacing-80:  80px;
-  --spacing-96:  96px;
-  --spacing-160: 160px;
+
+  /* Dimensões de layout */
+  --sidebar-width: 220px;
+  --topbar-height: 56px;
+}
+
+/* Suporte a dark mode */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --background:  oklch(21.5% 0.005 65);
+    --foreground:  oklch(93% 0.008 75);
+    --card:        oklch(25.5% 0.006 65);
+    --card-foreground: var(--foreground);
+    --secondary:   oklch(32% 0.007 65);
+    --muted:       oklch(29.5% 0.006 65);
+    --muted-foreground: oklch(75% 0.008 65);
+    --border:      oklch(93% 0.008 75 / 0.12);
+    --primary:     color-mix(in oklch, var(--palette-coral) 65%, var(--palette-charcoal));
+    --accent:      color-mix(in oklch, var(--primary) 14%, var(--background));
+  }
+}
+
+:root[data-theme="dark"] {
+  --background:  oklch(21.5% 0.005 65);
+  --foreground:  oklch(93% 0.008 75);
+  --card:        oklch(25.5% 0.006 65);
+  --card-foreground: var(--foreground);
+  --secondary:   oklch(32% 0.007 65);
+  --muted:       oklch(29.5% 0.006 65);
+  --muted-foreground: oklch(75% 0.008 65);
+  --border:      oklch(93% 0.008 75 / 0.12);
+  --primary:     color-mix(in oklch, var(--palette-coral) 65%, var(--palette-charcoal));
+  --accent:      color-mix(in oklch, var(--primary) 14%, var(--background));
 }
 
 /* Reset e base */
@@ -73,9 +149,137 @@ html, body {
 body {
   font-family: var(--font-body);
   font-size: 14px;
-  line-height: 1.64;
-  color: var(--color-ink-black);
-  background-color: var(--color-stone-canvas);
+  line-height: 1.6;
+  color: var(--foreground);
+  background-color: var(--background);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+}
+
+a {
+  color: var(--brand-strong);
+  text-decoration: none;
+}
+
+::selection {
+  background-color: var(--primary);
+  color: var(--palette-charcoal);
+}
+
+/* Utilitário: container de página */
+.app-page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-width: 0;
+  gap: clamp(1rem, 1.5vw, 1.5rem);
+  padding: clamp(1.25rem, 2vw, 2rem) clamp(1rem, 3vw, 2rem);
+}
+
+/* Componente base: botão primário */
+.btn-primario {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 14px;
+  border: 1px solid color-mix(in oklch, var(--primary) 78%, var(--primary-foreground));
+  border-radius: var(--radius);
+  background: linear-gradient(
+    to bottom,
+    color-mix(in oklch, var(--primary) 82%, white),
+    var(--primary)
+  );
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklch, white 48%, transparent),
+    0 1px 2px color-mix(in oklch, var(--foreground) 18%, transparent);
+  color: var(--primary-foreground);
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.12s;
+  white-space: nowrap;
+
+  &:hover {
+    background: linear-gradient(
+      to bottom,
+      color-mix(in oklch, var(--primary) 88%, white),
+      color-mix(in oklch, var(--primary) 92%, var(--foreground))
+    );
+  }
+
+  &:active {
+    transform: translateY(1px);
+    box-shadow: inset 0 1px 2px color-mix(in oklch, var(--foreground) 15%, transparent);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+.btn-secundario {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--foreground);
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.12s;
+
+  &:hover {
+    background: var(--muted);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+/* Componente base: input */
+.input {
+  height: 36px;
+  width: 100%;
+  padding: 0 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-input);
+  background: var(--card);
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  color: var(--foreground);
+  outline: none;
+  transition: border-color 0.12s, box-shadow 0.12s;
+
+  &::placeholder { color: var(--muted-foreground); }
+  &:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--primary) 20%, transparent);
+  }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+/* Componente base: card */
+.card-base {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
 }

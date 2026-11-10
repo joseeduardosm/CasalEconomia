@@ -1,11 +1,21 @@
+/*
+ * Orquestra o layout do Painel Principal.
+ *
+ * pq existe: grid responsivo 2/3 + 1/3 para o painel.
+ * para que no projeto: coluna principal (esquerda) com resumo e recentes;
+ *                      coluna lateral (direita) com faturas e vencimentos.
+ */
+
 .painel-pagina {
-  padding: 24px;
-  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(1rem, 1.5vw, 1.5rem);
+  padding: clamp(1.25rem, 2vw, 2rem) clamp(1rem, 3vw, 2rem);
 }
 
 .estado-carregando {
   font-size: 14px;
-  color: var(--color-warm-gray);
+  color: var(--muted-foreground);
   padding: 48px 0;
   text-align: center;
 }
@@ -16,19 +26,14 @@
   gap: 16px;
   align-items: start;
 
-  @media (max-width: 768px) {
+  @media (max-width: 900px) {
     grid-template-columns: 1fr;
   }
 
-  &__principal {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
+  &__principal,
   &__lateral {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 14px;
   }
 }

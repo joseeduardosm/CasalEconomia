@@ -1,122 +1,125 @@
-/* Estilos compartilhados entre login e cadastro — cartão de autenticação Seline Analytics */
+/* Estilos compartilhados entre login e cadastro */
 
 .pagina {
   min-height: 100vh;
-  background-color: var(--color-stone-canvas);
+  background: var(--background);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--spacing-24);
+  padding: 24px;
 }
 
 .card {
-  background: var(--color-pure-white);
-  border: 1px solid var(--color-stone-border);
-  border-radius: var(--radius-cards);        /* 10px */
-  padding: var(--spacing-24);               /* 24px — token card-padding */
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 32px;
   width: 100%;
   max-width: 440px;
-  box-shadow: var(--shadow-md);             /* rgba(0,0,0,0.05) 0px 4px 16px 0px */
+  box-shadow: var(--shadow-md);
 }
 
-/* Marca do produto — label uppercase cyan no topo do card */
 .marca {
-  font-family: var(--font-body);
+  font-family: var(--font-heading);
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--color-cyan-signal);
-  margin-bottom: var(--spacing-16);
+  color: var(--brand-strong);
+  margin-bottom: 16px;
 }
 
-/* Título do card — Inter Tight (substituto Roobert), peso 400, tracking negativo */
 .titulo {
   font-family: var(--font-heading);
-  font-size: 28px;
-  font-weight: 400;
-  line-height: 1.25;
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 1.2;
   letter-spacing: -0.025em;
-  color: var(--color-ink-black);
-  margin-bottom: var(--spacing-24);
+  color: var(--foreground);
+  margin-bottom: 24px;
 }
 
-/* Avisos de erro e sucesso */
 .aviso {
-  padding: var(--spacing-8) var(--spacing-12);
-  border-radius: var(--radius-icons);       /* 4px — pequeno */
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
   font-size: 13px;
-  line-height: 1.53;
-  margin-bottom: var(--spacing-16);
+  line-height: 1.5;
+  margin-bottom: 16px;
 
   &--erro {
-    background: #fef2f2;
-    color: #b91c1c;
-    border: 1px solid #fecaca;
+    background: oklch(97% 0.01 20);
+    color: var(--destructive);
+    border: 1px solid color-mix(in oklch, var(--destructive) 30%, transparent);
   }
 
   &--sucesso {
-    background: #f0fdf4;
-    color: #15803d;
-    border: 1px solid #bbf7d0;
+    background: oklch(97% 0.01 150);
+    color: var(--success);
+    border: 1px solid color-mix(in oklch, var(--success) 30%, transparent);
   }
 }
 
-/* Campo de formulário */
 .campo {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-4);
-  margin-bottom: var(--spacing-12);
+  gap: 4px;
+  margin-bottom: 12px;
 
   label {
     font-size: 13px;
     font-weight: 500;
-    color: var(--color-warm-gray);
-    letter-spacing: 0.004em;
+    color: var(--muted-foreground);
   }
 
   input {
-    padding: 7px var(--spacing-12);
-    background: var(--color-pure-white);
-    border: 1px solid var(--color-stone-muted);  /* #d6d3d1 — token correto para inputs */
-    border-radius: var(--radius-inputs);         /* 6px */
+    height: 36px;
+    padding: 0 10px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-input);
     font-family: var(--font-body);
     font-size: 14px;
-    line-height: 1.64;
-    color: var(--color-ink-black);
+    color: var(--foreground);
     outline: none;
-    transition: border-color 0.15s, outline 0.15s;
+    transition: border-color 0.12s, box-shadow 0.12s;
 
     &:focus {
-      border-color: transparent;
-      outline: 2px solid var(--color-cyan-signal);
-      outline-offset: 0;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px color-mix(in oklch, var(--primary) 20%, transparent);
     }
 
-    &::placeholder {
-      color: var(--color-ash-gray);
-    }
+    &::placeholder { color: var(--muted-foreground); }
   }
 }
 
-/* Botão primário — pill shape, fill cyan, borda cyan-edge */
 .botao-primario {
   width: 100%;
-  padding: 8px var(--spacing-16);
-  background-color: var(--color-cyan-signal);  /* #3ba6f1 */
-  color: #ffffff;
-  border: 1px solid var(--color-cyan-edge);    /* #3398e1 */
-  border-radius: var(--radius-buttons);        /* 9999px — pill obrigatório */
+  height: 38px;
+  padding: 0 16px;
+  border: 1px solid color-mix(in oklch, var(--primary) 78%, var(--primary-foreground));
+  border-radius: var(--radius);
+  background: linear-gradient(
+    to bottom,
+    color-mix(in oklch, var(--primary) 82%, white),
+    var(--primary)
+  );
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklch, white 48%, transparent),
+    0 1px 2px color-mix(in oklch, var(--foreground) 18%, transparent);
+  color: var(--primary-foreground);
   font-family: var(--font-body);
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
-  margin-top: var(--spacing-8);
-  transition: background-color 0.15s;
+  margin-top: 8px;
+  transition: all 0.12s;
 
   &:hover:not(:disabled) {
-    background-color: var(--color-cyan-edge);
+    background: linear-gradient(
+      to bottom,
+      color-mix(in oklch, var(--primary) 88%, white),
+      color-mix(in oklch, var(--primary) 92%, var(--foreground))
+    );
   }
 
   &:disabled {
@@ -125,21 +128,19 @@
   }
 }
 
-/* Rodapé do card — link para a outra tela */
 .rodape {
-  margin-top: var(--spacing-16);
+  margin-top: 16px;
   font-size: 13px;
-  color: var(--color-warm-gray);
+  color: var(--muted-foreground);
   text-align: center;
-  line-height: 1.53;
+  line-height: 1.5;
 
   a {
-    color: var(--color-cyan-signal);
+    color: var(--brand-strong);
     text-decoration: none;
     font-weight: 500;
 
     &:hover {
-      color: var(--color-cyan-edge);
       text-decoration: underline;
     }
   }

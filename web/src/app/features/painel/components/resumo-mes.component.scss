@@ -1,8 +1,14 @@
+/*
+ * Grade de cards do resumo financeiro do mês.
+ *
+ * pq existe: 4 cards (Receitas, Despesas, Saldo, A pagar) em grid.
+ * para que no projeto: visão rápida das finanças do mês com cores semânticas.
+ */
+
 .resumo-grade {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-  margin-bottom: 20px;
+  gap: 10px;
 
   @media (max-width: 768px) {
     grid-template-columns: repeat(2, 1fr);
@@ -12,49 +18,69 @@
 .card {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  padding: 16px;
+  gap: 2px;
+  padding: 14px 16px;
   width: 100%;
-  min-height: 110px;
-  background: var(--color-bg-surface);
-  border: 1px solid var(--color-border);
+  min-height: 100px;
+  background: var(--card);
+  border: 1px solid var(--border);
   border-radius: var(--radius-card);
   cursor: pointer;
   text-align: left;
-  transition: box-shadow 0.15s;
+  transition: box-shadow 0.15s, background 0.12s;
   box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
 
-  &:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    border-radius: var(--radius-card) var(--radius-card) 0 0;
+    background: transparent;
+    transition: background 0.15s;
+  }
 
-  &--receitas { border-top: 3px solid #22c55e; }
-  &--despesas { border-top: 3px solid #ef4444; }
-  &--saldo-positivo { border-top: 3px solid #22c55e; }
-  &--saldo-negativo { border-top: 3px solid #ef4444; }
-  &--apagar { border-top: 3px solid #f59e0b; }
+  &:hover {
+    box-shadow: var(--shadow-md);
+    background: color-mix(in oklch, var(--muted) 40%, var(--card));
+  }
+
+  &--receitas::before   { background: var(--success); }
+  &--despesas::before   { background: var(--destructive); }
+  &--saldo-positivo::before { background: var(--success); }
+  &--saldo-negativo::before { background: var(--destructive); }
+  &--apagar::before     { background: var(--warning); }
 
   &__rotulo {
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--color-warm-gray);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted-foreground);
     text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.05em;
+    margin-top: 4px;
   }
 
   &__valor {
     font-size: 20px;
-    font-weight: 700;
-    color: var(--color-text-primary);
-    margin: 4px 0;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--foreground);
+    margin: 4px 0 2px;
+    font-variant-numeric: tabular-nums;
   }
 
   &__sub {
     font-size: 11px;
-    color: var(--color-warm-gray);
+    color: var(--muted-foreground);
   }
 }
 
-.card--receitas .card__valor { color: #22c55e; }
-.card--despesas .card__valor { color: #ef4444; }
-.card--saldo-positivo .card__valor { color: #22c55e; }
-.card--saldo-negativo .card__valor { color: #ef4444; }
-.card--apagar .card__valor { color: #f59e0b; }
+.card--receitas .card__valor     { color: var(--success); }
+.card--despesas .card__valor     { color: var(--destructive); }
+.card--saldo-positivo .card__valor { color: var(--success); }
+.card--saldo-negativo .card__valor { color: var(--destructive); }
+.card--apagar .card__valor       { color: var(--warning); }

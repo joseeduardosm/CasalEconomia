@@ -1,10 +1,9 @@
 /*
- * Barra superior 56px com título e seletor de período.
+ * Barra superior com título da página e seletor de período.
  *
- * pq existe: Flexbox com justify-content: space-between distribui os dois blocos
- *            (título à esquerda, seletor de período à direita) automaticamente.
- * para que no projeto: identifica a tela atual e permite ao casal navegar
- *                      entre meses sem sair da página que está visitando.
+ * pq existe: identificação visual da tela + controle de período sem navegar.
+ * para que no projeto: 56px fixos no topo da área de conteúdo; título à
+ *                      esquerda, controles de mês/ano à direita.
  */
 
 :host {
@@ -15,23 +14,23 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 56px;
+  height: var(--topbar-height);
   padding: 0 24px;
-  background-color: var(--color-pure-white);
-  border-bottom: 1px solid var(--color-stone-border);
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
 
   &__titulo {
     font-family: var(--font-heading);
-    font-size: 17px;
-    font-weight: 400;
+    font-size: 16px;
+    font-weight: 500;
     letter-spacing: -0.015em;
-    color: var(--color-ink-black);
+    color: var(--foreground);
   }
 
   &__periodo {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 2px;
   }
 
   &__seta {
@@ -40,27 +39,29 @@
     justify-content: center;
     width: 28px;
     height: 28px;
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     background: none;
-    border: 1px solid var(--color-stone-border);
-    font-size: 16px;
-    color: var(--color-warm-gray);
+    border: 1px solid var(--border);
+    font-size: 15px;
+    color: var(--muted-foreground);
     cursor: pointer;
     line-height: 1;
-    transition: background-color 0.12s, color 0.12s;
+    transition: background 0.1s, color 0.1s, border-color 0.1s;
 
     &:hover {
-      background-color: var(--color-stone-canvas);
-      color: var(--color-ink-black);
+      background: var(--muted);
+      border-color: color-mix(in oklch, var(--primary) 40%, var(--border));
+      color: var(--foreground);
     }
   }
 
   &__label {
-    min-width: 90px;
+    min-width: 92px;
     text-align: center;
-    font-size: 13.5px;
+    font-size: 13px;
     font-weight: 500;
-    color: var(--color-ink-black);
+    color: var(--foreground);
     user-select: none;
+    padding: 0 4px;
   }
 }

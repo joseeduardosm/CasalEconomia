@@ -1,22 +1,29 @@
+/*
+ * Widget do parceiro — pendentes inline e resumo bilateral.
+ *
+ * pq existe: aceitar/ignorar lançamentos compartilhados sem sair do painel.
+ * para que no projeto: reduz fricção do fluxo de aprovação do casal.
+ */
+
 .widget {
-  background: var(--color-bg-surface);
-  border: 1px solid var(--color-border);
+  background: var(--card);
+  border: 1px solid var(--border);
   border-radius: var(--radius-card);
   padding: 16px;
 
   &__cabecalho {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     margin-bottom: 14px;
   }
 
   &__titulo {
-    font-size: 13px;
+    font-size: 11px;
     font-weight: 600;
-    color: var(--color-text-secondary);
+    color: var(--muted-foreground);
     text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.05em;
   }
 }
 
@@ -24,27 +31,28 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 20px;
-  height: 20px;
-  padding: 0 6px;
-  background: #ef4444;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  background: var(--destructive);
   color: #fff;
   font-size: 11px;
   font-weight: 700;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
 }
 
 .pendentes-secao {
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
   padding: 10px;
   margin-bottom: 14px;
-  background: var(--color-bg-page);
+  background: var(--muted);
 
   &__rotulo {
     font-size: 12px;
-    color: var(--color-warm-gray);
+    color: var(--muted-foreground);
     margin-bottom: 8px;
+    font-weight: 500;
   }
 }
 
@@ -53,97 +61,116 @@
   align-items: center;
   gap: 8px;
   padding: 8px 0;
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--border);
 
   &:last-of-type { border-bottom: none; }
 
   &__info {
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
+    min-width: 0;
   }
 
   &__descricao {
     font-size: 13px;
     font-weight: 500;
-    color: var(--color-text-primary);
+    color: var(--foreground);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   &__meta {
     font-size: 11px;
-    color: var(--color-warm-gray);
+    color: var(--muted-foreground);
   }
 
   &__valor {
     font-size: 13px;
     font-weight: 600;
     white-space: nowrap;
-    color: var(--color-text-primary);
+    color: var(--foreground);
+    font-variant-numeric: tabular-nums;
   }
 
   &__acoes {
     display: flex;
     gap: 4px;
+    flex-shrink: 0;
   }
 }
 
 .btn-aceitar {
-  padding: 4px 10px;
-  background: rgba(34,197,94,0.1);
-  color: #16a34a;
-  border: 1px solid rgba(34,197,94,0.3);
+  padding: 3px 10px;
+  background: color-mix(in oklch, var(--success) 10%, transparent);
+  color: var(--success);
+  border: 1px solid color-mix(in oklch, var(--success) 30%, transparent);
   border-radius: var(--radius-pill);
   font-size: 12px;
   font-weight: 500;
   cursor: pointer;
-  &:hover:not(:disabled) { background: rgba(34,197,94,0.2); }
+  transition: background 0.1s;
+
+  &:hover:not(:disabled) {
+    background: color-mix(in oklch, var(--success) 20%, transparent);
+  }
+
   &:disabled { opacity: 0.5; cursor: not-allowed; }
 }
 
 .btn-ignorar {
-  padding: 4px 10px;
+  padding: 3px 10px;
   background: transparent;
-  color: var(--color-warm-gray);
-  border: 1px solid var(--color-border);
+  color: var(--muted-foreground);
+  border: 1px solid var(--border);
   border-radius: var(--radius-pill);
   font-size: 12px;
   cursor: pointer;
-  &:hover:not(:disabled) { border-color: var(--color-warm-gray); }
+  transition: border-color 0.1s;
+
+  &:hover:not(:disabled) {
+    border-color: var(--muted-foreground);
+    color: var(--foreground);
+  }
+
   &:disabled { opacity: 0.5; cursor: not-allowed; }
 }
 
 .btn-ver-todos {
   background: none;
   border: none;
-  color: var(--color-brand);
+  color: var(--brand-strong);
   font-size: 12px;
+  font-weight: 500;
   cursor: pointer;
   margin-top: 8px;
+  transition: color 0.1s;
+
   &:hover { text-decoration: underline; }
 }
 
 .resumo-bilateral {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 
   &__linha {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 4px 0;
   }
 
   &__rotulo {
     font-size: 13px;
-    color: var(--color-warm-gray);
+    color: var(--muted-foreground);
   }
 
   &__valor {
-    font-size: 14px;
+    font-size: 13.5px;
     font-weight: 600;
-    color: var(--color-text-primary);
+    color: var(--foreground);
+    font-variant-numeric: tabular-nums;
 
-    &--receita { color: #22c55e; }
+    &--receita { color: var(--success); }
   }
 }

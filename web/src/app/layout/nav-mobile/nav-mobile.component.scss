@@ -1,10 +1,8 @@
 /*
  * Barra de navegação inferior para mobile.
  *
- * pq existe: position: fixed na parte inferior + z-index garante que a barra
- *            fique sempre visível independente do conteúdo acima dela.
- * para que no projeto: navegação dos 5 módulos principais em telas pequenas,
- *                      ativa apenas abaixo de 768px via CSS do ConchaComponent.
+ * pq existe: navegação primária em telas pequenas.
+ * para que no projeto: 5 ícones fixos na base; ativo em coral.
  */
 
 :host {
@@ -18,10 +16,11 @@
   right: 0;
   height: 60px;
   display: flex;
-  align-items: center;
-  background-color: var(--color-pure-white);
-  border-top: 1px solid var(--color-stone-border);
+  align-items: stretch;
+  background: var(--card);
+  border-top: 1px solid var(--border);
   z-index: 100;
+  padding-bottom: env(safe-area-inset-bottom);
 
   &__item {
     flex: 1;
@@ -32,11 +31,11 @@
     gap: 2px;
     padding: 6px 0;
     text-decoration: none;
-    color: var(--color-ash-gray);
+    color: var(--muted-foreground);
     transition: color 0.12s;
 
     &--ativo {
-      color: var(--color-cyan-signal);
+      color: var(--brand-strong);
     }
   }
 

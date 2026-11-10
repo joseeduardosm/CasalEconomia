@@ -1,10 +1,9 @@
 /*
- * Sidebar de navegação lateral — 220px.
+ * Sidebar de navegação lateral.
  *
- * pq existe: CSS BEM — metodologia de nomenclatura que previne conflitos de
- *            escopo e torna a hierarquia visual legível pela classe.
- * para que no projeto: estiliza a sidebar com 8 itens de menu, item ativo em
- *                      fundo ciano translúcido e botão de logout no rodapé.
+ * pq existe: navegação primária do app no desktop.
+ * para que no projeto: 8 itens de menu, item ativo destacado em coral,
+ *                      botão de logout no rodapé e badge de pendentes.
  */
 
 :host {
@@ -14,23 +13,23 @@
 .nav-lateral {
   display: flex;
   flex-direction: column;
-  width: 220px;
+  width: var(--sidebar-width);
   height: 100%;
-  background-color: var(--color-pure-white);
-  border-right: 1px solid var(--color-stone-border);
+  background: var(--card);
+  border-right: 1px solid var(--border);
   overflow: hidden;
 
   &__marca {
-    padding: 20px 16px 16px;
-    border-bottom: 1px solid var(--color-stone-border);
+    padding: 18px 16px 14px;
+    border-bottom: 1px solid var(--border);
   }
 
   &__logo {
     font-family: var(--font-heading);
     font-size: 15px;
-    font-weight: 500;
-    color: var(--color-ink-black);
-    letter-spacing: -0.015em;
+    font-weight: 600;
+    color: var(--foreground);
+    letter-spacing: -0.02em;
   }
 
   &__lista {
@@ -43,29 +42,29 @@
   &__item {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 8px 16px;
+    gap: 9px;
+    padding: 7px 12px;
     margin: 1px 8px;
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     font-size: 13.5px;
     font-weight: 400;
-    color: var(--color-warm-gray);
+    color: var(--muted-foreground);
     text-decoration: none;
-    transition: background-color 0.12s, color 0.12s;
+    transition: background 0.12s, color 0.12s;
     cursor: pointer;
 
     &:hover {
-      background-color: rgba(59, 166, 241, 0.05);
-      color: var(--color-ink-black);
+      background: var(--muted);
+      color: var(--foreground);
     }
 
     &--ativo {
-      background-color: rgba(59, 166, 241, 0.08);
-      color: var(--color-cyan-signal);
+      background: color-mix(in oklch, var(--primary) 14%, var(--background));
+      color: var(--brand-strong);
       font-weight: 500;
 
       .nav-lateral__icone {
-        color: var(--color-cyan-signal);
+        color: var(--brand-strong);
       }
     }
   }
@@ -82,9 +81,9 @@
     min-width: 18px;
     height: 18px;
     padding: 0 5px;
-    background: var(--color-brand);
-    color: #fff;
-    border-radius: 999px;
+    background: var(--primary);
+    color: var(--primary-foreground);
+    border-radius: var(--radius-pill);
     font-size: 11px;
     font-weight: 600;
     display: inline-flex;
@@ -94,27 +93,27 @@
 
   &__rodape {
     padding: 8px;
-    border-top: 1px solid var(--color-stone-border);
+    border-top: 1px solid var(--border);
   }
 
   &__sair {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 9px;
     width: 100%;
-    padding: 8px 8px;
-    border-radius: 6px;
+    padding: 7px 12px;
+    border-radius: var(--radius-sm);
     background: none;
     border: none;
     font-family: var(--font-body);
     font-size: 13.5px;
-    color: var(--color-warm-gray);
+    color: var(--muted-foreground);
     cursor: pointer;
-    transition: background-color 0.12s, color 0.12s;
+    transition: background 0.12s, color 0.12s;
 
     &:hover {
-      background-color: #fef2f2;
-      color: #b91c1c;
+      background: oklch(97% 0.01 20);
+      color: var(--destructive);
     }
   }
 }

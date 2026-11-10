@@ -1,121 +1,155 @@
+/*
+ * Widget de faturas abertas.
+ *
+ * pq existe: lista cartões com fatura aberta + barra de progresso pago/total.
+ * para que no projeto: alerta de vencimento próximo em destaque vermelho.
+ */
+
 .widget {
-  background: var(--color-bg-surface);
-  border: 1px solid var(--color-border);
+  background: var(--card);
+  border: 1px solid var(--border);
   border-radius: var(--radius-card);
   padding: 16px;
 
   &__titulo {
-    font-size: 13px;
+    font-size: 11px;
     font-weight: 600;
-    color: var(--color-text-secondary);
+    color: var(--muted-foreground);
     text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.05em;
     margin-bottom: 14px;
   }
 
   &__vazio {
     font-size: 13px;
-    color: var(--color-warm-gray);
-    padding: 12px 0;
+    color: var(--muted-foreground);
+    padding: 8px 0;
   }
 }
 
 .fatura-item {
   display: flex;
-  align-items: center;
-  gap: 0;
-  border: 1px solid var(--color-border);
+  align-items: stretch;
+  border: 1px solid var(--border);
   border-radius: var(--radius-card);
   margin-bottom: 8px;
   cursor: pointer;
   overflow: hidden;
   transition: box-shadow 0.15s;
 
-  &:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  &:hover { box-shadow: var(--shadow-md); }
+  &:last-child { margin-bottom: 0; }
 
-  &--alerta { background: rgba(239,68,68,0.04); }
+  &--alerta {
+    background: color-mix(in oklch, var(--destructive) 5%, var(--card));
+    border-color: color-mix(in oklch, var(--destructive) 20%, var(--border));
+  }
 
   &__faixa {
     width: 4px;
-    align-self: stretch;
     flex-shrink: 0;
+    background: var(--border);
   }
+
+  &--alerta &__faixa { background: var(--destructive); }
 
   &__conteudo {
     flex: 1;
     padding: 10px 12px;
+    min-width: 0;
   }
 
   &__topo {
     display: flex;
     align-items: center;
     gap: 8px;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
   }
 
   &__nome {
-    font-size: 14px;
+    font-size: 13.5px;
     font-weight: 500;
-    color: var(--color-text-primary);
+    color: var(--foreground);
     flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   &__alerta {
-    color: #ef4444;
-    font-size: 14px;
+    color: var(--destructive);
+    font-size: 13px;
   }
 
   &__status {
     font-size: 11px;
     padding: 2px 7px;
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
+    font-weight: 500;
 
-    &--aberta { background: rgba(59,130,246,0.1); color: #3b82f6; }
-    &--fechada { background: rgba(107,114,128,0.1); color: #6b7280; }
-    &--parcialmente_paga { background: rgba(245,158,11,0.1); color: #d97706; }
-    &--vencida { background: rgba(239,68,68,0.1); color: #dc2626; }
+    &--aberta {
+      background: color-mix(in oklch, var(--primary) 15%, transparent);
+      color: var(--brand-strong);
+    }
+    &--fechada {
+      background: var(--muted);
+      color: var(--muted-foreground);
+    }
+    &--parcialmente_paga {
+      background: color-mix(in oklch, var(--warning) 15%, transparent);
+      color: var(--warning);
+    }
+    &--vencida {
+      background: color-mix(in oklch, var(--destructive) 12%, transparent);
+      color: var(--destructive);
+    }
   }
 
   &__valores {
     display: flex;
     align-items: baseline;
-    gap: 10px;
+    gap: 8px;
     margin-bottom: 6px;
   }
 
   &__restante {
-    font-size: 17px;
-    font-weight: 700;
-    color: var(--color-text-primary);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--foreground);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.015em;
   }
 
   &__venc {
     font-size: 12px;
-    color: var(--color-warm-gray);
+    color: var(--muted-foreground);
   }
 
   &__barra {
-    height: 4px;
-    background: var(--color-bg-page);
+    height: 3px;
+    background: var(--muted);
     border-radius: 2px;
     overflow: hidden;
   }
 
   &__barra-pago {
     height: 100%;
-    background: #22c55e;
+    background: var(--success);
     border-radius: 2px;
-    transition: width 0.3s;
+    transition: width 0.4s ease;
   }
 }
 
 .btn-ver-fatura {
   background: none;
   border: none;
-  color: var(--color-brand);
+  color: var(--brand-strong);
   font-size: 12px;
+  font-weight: 500;
   cursor: pointer;
   padding: 0 12px;
   white-space: nowrap;
-  &:hover { text-decoration: underline; }
+  transition: color 0.1s;
+
+  &:hover { color: var(--primary); text-decoration: underline; }
 }

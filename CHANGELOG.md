@@ -11,6 +11,31 @@ versionamento segue [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
 ---
 
+## [0.8.0] — 10/11/2026
+
+### Alterado
+
+- **Redesign completo do frontend** — paleta coral/oklch substituiu o ciano; tipografia Geist Variable; design system alinhado com o projeto de referência
+- `styles.scss` — tokens globais reescritos com `oklch()`: `--palette-coral`, `--palette-charcoal`, `--background` warm off-white; aliases mantidos para compatibilidade; dark mode via `@media` + `[data-theme]`
+- `index.html` — fonte trocada de Inter para Geist Variable (Google Fonts)
+- `concha.component.scss` — layout simplificado, usa variáveis do design system
+- `nav-lateral.component.scss` — item ativo em coral (`color-mix` translúcido), cores legíveis em oklch
+- `barra-topo.component.scss` — setas de período com hover coral
+- `nav-mobile.component.scss` — item ativo em `--brand-strong`, safe-area para iOS
+- `_auth-card.scss` — botão primário com gradiente coral estilo `primary-action`; aviso de erro/sucesso com cores oklch semânticas
+- `painel.component.scss` — usa layout `app-page` inline (sem `@extend`)
+- `resumo-mes.component.scss` — cards com barra superior colorida, hover suave, tipografia numérica tabular
+- `faturas-card.component.scss` — tokens oklch; borda lateral colorida por status; barra de progresso semântica
+- `lancamentos-recentes.component.scss` — hover com deslocamento lateral; cores oklch
+- `proximos-vencimentos.component.scss` — cores semânticas com `color-mix` em vez de hex fixos
+- `widget-parceiro.component.scss` — botões aceitar/ignorar com cores oklch
+- `drawer-detalhe.component.scss` — animações preservadas; tabela com hover coral no `border-left`
+- `lancamentos.component.scss` — FAB com gradiente coral; botões de modal com `primary-action` style; filtros com pills oklch
+- `cartoes.component.scss` — grade de cards com hover shadow; bandeira como pill; botão primário coral
+- `fatura.component.scss` — layout `app-page`; valores com `tabular-nums`; cores oklch semânticas
+
+---
+
 ## [0.7.0] — 10/11/2026
 
 ### Adicionado
@@ -150,7 +175,8 @@ versionamento segue [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 - Serviços systemd `casaleconomia-api` e `casaleconomia-web` com inicialização automática no boot
 - `.gitignore` cobrindo Python, Node e arquivos de ambiente (`.env`)
 
-[Não lançado]: https://github.com/joseeduardosm/CasalEconomia/compare/v0.7.0...HEAD
+[Não lançado]: https://github.com/joseeduardosm/CasalEconomia/compare/v0.8.0...HEAD
+[0.8.0]: https://github.com/joseeduardosm/CasalEconomia/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/joseeduardosm/CasalEconomia/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/joseeduardosm/CasalEconomia/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/joseeduardosm/CasalEconomia/compare/v0.4.0...v0.5.0
