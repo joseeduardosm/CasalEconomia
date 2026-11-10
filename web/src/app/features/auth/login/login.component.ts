@@ -8,12 +8,13 @@
  *                      chama /api/auth/entrar e persiste a ficha JWT recebida.
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../core/services/auth.service';
+import { ParceiroService } from '../../../core/services/parceiro.service';
 import { environment } from '../../../../environments/environment';
 
 interface RespostaToken {
@@ -33,6 +34,8 @@ export class LoginComponent implements OnInit {
   mensagemErro = '';
   mensagemSucesso = '';
   carregando = false;
+
+  private parceiroService = inject(ParceiroService);
 
   constructor(
     private fb: FormBuilder,
@@ -64,6 +67,7 @@ export class LoginComponent implements OnInit {
       .subscribe({
         next: (resposta) => {
           this.authService.salvarToken(resposta.access_token);
+          this.parceiroService.iniciarPolling();
           this.router.navigate(['/painel']);
         },
         error: () => {

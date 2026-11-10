@@ -1,0 +1,30 @@
+<div class="widget">
+  <div class="widget__cabecalho">
+    <h3 class="widget__titulo">Últimos lançamentos</h3>
+    <button class="btn-ver-todos" (click)="verTodos()">Ver todos →</button>
+  </div>
+
+  @if (lancamentos.length === 0) {
+    <p class="widget__vazio">Nenhum lançamento neste mês.</p>
+  } @else {
+    @for (item of lancamentos; track item.id) {
+      <div class="item-rec" (click)="abrirDetalhe(item)">
+        <span class="item-rec__icone" [class.item-rec__icone--receita]="item.tipo === 'receita'">
+          {{ item.tipo === 'receita' ? '↑' : '↓' }}
+        </span>
+        <div class="item-rec__info">
+          <span class="item-rec__descricao">
+            {{ item.descricao }}
+            @if (item.parcela_atual && item.total_parcelas) {
+              <span class="item-rec__parcela">({{ item.parcela_atual }}/{{ item.total_parcelas }})</span>
+            }
+          </span>
+          <span class="item-rec__data">{{ item.data_lancamento | date:'d/M':'':'pt-BR' }}</span>
+        </div>
+        <span class="item-rec__valor" [class.item-rec__valor--receita]="item.tipo === 'receita'">
+          {{ item.valor | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
+        </span>
+      </div>
+    }
+  }
+</div>

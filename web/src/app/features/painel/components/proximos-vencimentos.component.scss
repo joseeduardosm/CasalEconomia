@@ -1,0 +1,72 @@
+.widget {
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 16px;
+
+  &__titulo {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 14px;
+  }
+
+  &__vazio {
+    font-size: 13px;
+    color: var(--color-warm-gray);
+    padding: 12px 0;
+  }
+}
+
+.venc-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 10px;
+  border-radius: var(--radius-card);
+  margin-bottom: 4px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+
+  &:hover { opacity: 0.85; }
+
+  &--vencido {
+    background: rgba(239,68,68,0.06);
+  }
+
+  &--urgente {
+    background: rgba(245,158,11,0.06);
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+  }
+
+  &__descricao {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+  }
+
+  &__badge {
+    font-size: 11px;
+    color: #d97706;
+
+    &--vencido { color: #dc2626; }
+  }
+
+  &__valor {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    white-space: nowrap;
+
+    &--receita { color: #22c55e; }
+  }
+}

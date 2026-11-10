@@ -333,7 +333,7 @@ file /tmp/modelo.xlsx
 # 6. Validar importação (sem persistir)
 curl -s -X POST http://localhost:8000/lancamentos/importar \
   -H "Authorization: Bearer $TOKEN" \
-  -F "arquivo=@/home/administrador/openmonetis-v2/apoio/importacao_fatura_9503_nov2026.xlsx" \
+  -F "arquivo=@/home/administrador/casalEconomia/apoio/importacao_fatura_9503_nov2026.xlsx" \
   | python3 -m json.tool
 # esperado: linhas_validas (N linhas), linhas_com_erro (M linhas com problema)
 # verificar que nenhum lançamento novo aparece no banco ainda

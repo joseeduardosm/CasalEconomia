@@ -1,0 +1,112 @@
+.convite-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  color: var(--color-warm-gray);
+  font-size: 14px;
+}
+
+.convite-wrap {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg-page);
+  padding: 24px 16px;
+}
+
+.convite-card {
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 40px 32px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: var(--shadow-card);
+
+  &__titulo {
+    font-family: var(--font-heading);
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--color-text-primary);
+    margin-bottom: 8px;
+  }
+
+  &__sub {
+    font-size: 14px;
+    color: var(--color-warm-gray);
+    margin-bottom: 28px;
+    line-height: 1.5;
+  }
+}
+
+.convite-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  &__erro {
+    font-size: 13px;
+    color: var(--color-danger, #e53e3e);
+    margin: 0;
+  }
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  &__rotulo {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+  }
+
+  &__input {
+    padding: 10px 14px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-input);
+    font-size: 14px;
+    color: var(--color-text-primary);
+    background: var(--color-bg-surface);
+    outline: none;
+    transition: border-color 0.15s;
+
+    &:focus {
+      border-color: var(--color-brand);
+    }
+
+    &[readonly] {
+      background: var(--color-bg-page);
+      color: var(--color-warm-gray);
+      cursor: default;
+    }
+  }
+}
+
+.btn-primario {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 24px;
+  background: var(--color-brand);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-pill);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 0.15s;
+
+  &:hover:not(:disabled) {
+    opacity: 0.88;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}

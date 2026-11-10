@@ -21,15 +21,22 @@ from app.services import auth as servico_auth
 roteador = APIRouter(prefix="/auth", tags=["autenticação"])
 
 
-def _obter_usuario_atual(authorization: str = Header(...)) -> uuid.UUID:
-    """
-    Extrai e valida o token JWT do cabeçalho Authorization.
-    Retorna o ID do usuário autenticado. Será centralizado em middleware futuro.
-    """
+def _extrair_id_usuario(authorization: str = Header(...)) -> uuid.UUID:
     if not authorization.startswith("Bearer "):
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Token ausente ou mal formatado.")
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Ficha ausente ou mal formatada.")
     token = authorization.removeprefix("Bearer ")
     return servico_auth.verificar_token(token)
+
+
+def obter_usuario_atual(
+    usuario_id: uuid.UUID = Depends(_extrair_id_usuario),
+    db: Session = Depends(obter_sessao),
+):
+    """Dependência que retorna o objeto Usuario autenticado."""
+    usuario = repo_usuario.buscar_por_email(db, None, usuario_id=usuario_id)
+    if not usuario:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Usuário não encontrado.")
+    return usuario
 
 
 @roteador.post("/registrar", status_code=status.HTTP_201_CREATED, response_model=RespostaToken)

@@ -1,0 +1,61 @@
+<div class="widget">
+  <div class="widget__cabecalho">
+    <h3 class="widget__titulo">{{ parceiro.nome }}</h3>
+    @if (parceiro.pendentes_count > 0) {
+      <span class="badge">{{ parceiro.pendentes_count }}</span>
+    }
+  </div>
+
+  @if (parceiro.pendentes_count > 0) {
+    <div class="pendentes-secao">
+      <p class="pendentes-secao__rotulo">Lançamentos para você</p>
+      @for (p of parceiro.pendentes; track p.id) {
+        <div class="pendente-item">
+          <div class="pendente-item__info">
+            <span class="pendente-item__descricao">{{ p.snapshot_descricao }}</span>
+            <span class="pendente-item__meta">
+              {{ p.snapshot_data | date:'d/M/yy':'':'pt-BR' }} ·
+              {{ p.snapshot_tipo === 'receita' ? 'Receita' : 'Despesa' }}
+            </span>
+          </div>
+          <span class="pendente-item__valor">
+            {{ p.snapshot_valor | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
+          </span>
+          <div class="pendente-item__acoes">
+            <button class="btn-aceitar"
+                    [disabled]="aceitando() === p.id || ignorando() !== null"
+                    (click)="aceitar(p)">
+              {{ aceitando() === p.id ? '…' : 'Aceitar' }}
+            </button>
+            <button class="btn-ignorar"
+                    [disabled]="ignorando() === p.id || aceitando() !== null"
+                    (click)="ignorar(p)">
+              {{ ignorando() === p.id ? '…' : 'Ignorar' }}
+            </button>
+          </div>
+        </div>
+      }
+      @if (parceiro.pendentes_count > 3) {
+        <button class="btn-ver-todos" (click)="verTodosOsPendentes()">
+          Ver todos os {{ parceiro.pendentes_count }} pendentes →
+        </button>
+      }
+    </div>
+  }
+
+  <!-- Resumo bilateral -->
+  <div class="resumo-bilateral">
+    <div class="resumo-bilateral__linha">
+      <span class="resumo-bilateral__rotulo">Despesas de {{ parceiro.nome }}</span>
+      <span class="resumo-bilateral__valor">
+        {{ parceiro.resumo_despesas | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
+      </span>
+    </div>
+    <div class="resumo-bilateral__linha">
+      <span class="resumo-bilateral__rotulo">Receitas de {{ parceiro.nome }}</span>
+      <span class="resumo-bilateral__valor resumo-bilateral__valor--receita">
+        {{ parceiro.resumo_receitas | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
+      </span>
+    </div>
+  </div>
+</div>

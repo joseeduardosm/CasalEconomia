@@ -1,0 +1,57 @@
+<div class="painel-pagina">
+  @if (carregando()) {
+    <p class="estado-carregando">Carregando painel…</p>
+  } @else if (dados()) {
+    <!-- Resumo do mês: 4 cards -->
+    <app-resumo-mes
+      [resumo]="dados().resumo_mes"
+      [mes]="mes()"
+      (abrirDrawer)="abrirDrawer($event)"
+    />
+
+    <!-- Grade principal: 2/3 + 1/3 -->
+    <div class="painel-grade">
+      <div class="painel-grade__principal">
+        <!-- Lançamentos recentes -->
+        <app-lancamentos-recentes
+          [lancamentos]="dados().lancamentos_recentes"
+          [mes]="mes()"
+          (abrirDrawer)="abrirDrawer($event)"
+        />
+
+        <!-- Próximos vencimentos -->
+        <app-proximos-vencimentos
+          [vencimentos]="dados().proximos_vencimentos"
+          (abrirDrawer)="abrirDrawer($event)"
+        />
+      </div>
+
+      <div class="painel-grade__lateral">
+        <!-- Faturas de cartão -->
+        <app-faturas-card
+          [faturas]="dados().faturas_abertas"
+          [mes]="mes()"
+          (abrirDrawer)="abrirDrawer($event)"
+        />
+
+        <!-- Widget Parceiro (se conectado) -->
+        @if (dados().parceiro) {
+          <app-widget-parceiro
+            [parceiro]="dados().parceiro"
+            [mes]="mes()"
+            (atualizar)="carregar()"
+            (abrirDrawer)="abrirDrawer($event)"
+          />
+        }
+      </div>
+    </div>
+  }
+
+  <!-- Drawer lateral de detalhe -->
+  @if (drawerFiltro()) {
+    <app-drawer-detalhe
+      [filtro]="drawerFiltro()!"
+      (fechar)="fecharDrawer()"
+    />
+  }
+</div>

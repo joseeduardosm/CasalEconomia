@@ -1,0 +1,57 @@
+.resumo-grade {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px;
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  cursor: pointer;
+  text-align: left;
+  transition: box-shadow 0.15s;
+
+  &:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+
+  &--receitas { border-top: 3px solid #22c55e; }
+  &--despesas { border-top: 3px solid #ef4444; }
+  &--saldo-positivo { border-top: 3px solid #22c55e; }
+  &--saldo-negativo { border-top: 3px solid #ef4444; }
+  &--apagar { border-top: 3px solid #f59e0b; }
+
+  &__rotulo {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-warm-gray);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  &__valor {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 4px 0;
+  }
+
+  &__sub {
+    font-size: 11px;
+    color: var(--color-warm-gray);
+  }
+}
+
+.card--receitas .card__valor { color: #22c55e; }
+.card--despesas .card__valor { color: #ef4444; }
+.card--saldo-positivo .card__valor { color: #22c55e; }
+.card--saldo-negativo .card__valor { color: #ef4444; }
+.card--apagar .card__valor { color: #f59e0b; }

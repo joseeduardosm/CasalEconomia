@@ -1,0 +1,32 @@
+@if (carregando()) {
+  <div class="estado-vazio"><p>Carregando…</p></div>
+} @else if (pendentes().length === 0) {
+  <div class="estado-vazio">
+    <p class="estado-vazio__texto">Nenhum lançamento aguardando sua ação.</p>
+  </div>
+} @else {
+  <div class="lista-pendentes">
+    @for (item of pendentes(); track item.id) {
+      <div class="card-pendente" [class.card-pendente--processando]="item.processando">
+        <div class="card-pendente__info">
+          <span class="card-pendente__descricao">{{ item.snapshot_descricao }}</span>
+          <span class="card-pendente__valor">{{ item.snapshot_valor | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
+        </div>
+        <div class="card-pendente__meta">
+          <span class="card-pendente__data">{{ item.snapshot_data | date:'dd/MM/yyyy' }}</span>
+          <span class="card-pendente__tipo" [class.card-pendente__tipo--receita]="item.snapshot_tipo === 'receita'">
+            {{ item.snapshot_tipo }}
+          </span>
+        </div>
+        <div class="card-pendente__acoes">
+          <button class="btn-aceitar" (click)="aceitar(item)" [disabled]="item.processando">
+            Aceitar
+          </button>
+          <button class="btn-ignorar" (click)="ignorar(item)" [disabled]="item.processando">
+            Ignorar
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+}

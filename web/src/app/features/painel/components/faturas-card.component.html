@@ -1,0 +1,32 @@
+<div class="widget">
+  <h3 class="widget__titulo">Faturas do mês</h3>
+
+  @if (faturas.length === 0) {
+    <p class="widget__vazio">Nenhuma fatura aberta este mês.</p>
+  } @else {
+    @for (f of faturas; track f.fatura_id) {
+      <div class="fatura-item" [class.fatura-item--alerta]="f.vencendo_em_breve" (click)="abrirFatura(f)">
+        <div class="fatura-item__faixa" [style.background]="f.cartao_cor"></div>
+        <div class="fatura-item__conteudo">
+          <div class="fatura-item__topo">
+            <span class="fatura-item__nome">{{ f.cartao_nome }}</span>
+            @if (f.vencendo_em_breve) {
+              <span class="fatura-item__alerta" title="Vencimento próximo">⚠</span>
+            }
+            <span class="fatura-item__status fatura-item__status--{{ f.status }}">{{ f.status.replace('_', ' ') }}</span>
+          </div>
+          <div class="fatura-item__valores">
+            <span class="fatura-item__restante">{{ f.valor_restante | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
+            <span class="fatura-item__venc">vence {{ f.data_vencimento | date:'d/M':'':'pt-BR' }}</span>
+          </div>
+          <div class="fatura-item__barra">
+            <div class="fatura-item__barra-pago"
+                 [style.width]="f.valor_total > 0 ? ((f.valor_pago / f.valor_total) * 100) + '%' : '0%'">
+            </div>
+          </div>
+        </div>
+        <button class="btn-ver-fatura" (click)="verFaturaCompleta(f, $event)">Ver →</button>
+      </div>
+    }
+  }
+</div>

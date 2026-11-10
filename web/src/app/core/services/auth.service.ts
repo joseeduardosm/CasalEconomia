@@ -10,11 +10,13 @@
 
 import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { ParceiroService } from './parceiro.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly CHAVE_TOKEN = 'ce_token';
   private readonly roteador = inject(Router);
+  private readonly parceiroService = inject(ParceiroService);
 
   salvarToken(token: string): void {
     localStorage.setItem(this.CHAVE_TOKEN, token);
@@ -29,6 +31,7 @@ export class AuthService {
   }
 
   sair(): void {
+    this.parceiroService.pararPolling();
     localStorage.removeItem(this.CHAVE_TOKEN);
     this.roteador.navigate(['/login']);
   }

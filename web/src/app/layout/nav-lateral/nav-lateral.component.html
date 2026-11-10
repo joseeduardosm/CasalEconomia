@@ -13,6 +13,9 @@
         >
           <ng-icon [name]="item.icone" class="nav-lateral__icone" />
           <span>{{ item.rotulo }}</span>
+          @if (item.badge && parceiro.totalPendentes() > 0) {
+            <span class="nav-lateral__badge">{{ parceiro.totalPendentes() }}</span>
+          }
         </a>
       </li>
     }

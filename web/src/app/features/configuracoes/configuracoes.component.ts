@@ -1,27 +1,61 @@
 /**
- * Tela de configurações do CasalEconomia.
- * Placeholder — implementação completa prevista em tarefa futura.
+ * Tela de configurações do CasalEconomia — inclui geração de convite de casal.
  *
- * pq existe: Angular standalone component com carregamento tardio (lazy) —
- *            o código só é baixado quando o usuário acessa a rota.
- * para que no projeto: módulo de preferências de conta, notificações e aparência do app.
+ * pq existe: Angular standalone component com signals — reativo sem RxJS.
+ * para que no projeto: permite ao usuário autenticado convidar seu parceiro
+ *                      gerando um link único de acesso.
  */
 
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-configuracoes',
   standalone: true,
-  template: `
-    <div class="pagina-placeholder">
-      <h1>Configurações</h1>
-      <p>Em construção.</p>
-    </div>
-  `,
-  styles: [`
-    .pagina-placeholder { padding: 24px; }
-    h1 { font-family: var(--font-heading); font-size: 24px; font-weight: 400; margin-bottom: 8px; }
-    p { color: var(--color-warm-gray); font-size: 14px; }
-  `],
+  imports: [FormsModule],
+  templateUrl: './configuracoes.component.html',
+  styleUrl: './configuracoes.component.scss',
 })
-export class ConfiguracoesComponent {}
+export class ConfiguracoesComponent {
+  private http = inject(HttpClient);
+
+  nomeConvidado = signal('');
+  emailConvidado = signal('');
+  linkGerado = signal('');
+  enviando = signal(false);
+  erro = signal('');
+  copiado = signal(false);
+
+  gerarConvite(): void {
+    if (!this.nomeConvidado() || !this.emailConvidado()) return;
+    this.enviando.set(true);
+    this.erro.set('');
+    this.linkGerado.set('');
+
+    this.http
+      .post<{ token: string; nome_convidado: string; email_convidado: string }>(
+        `${environment.apiUrl}/convites`,
+        { nome_convidado: this.nomeConvidado(), email_convidado: this.emailConvidado() }
+      )
+      .subscribe({
+        next: (res) => {
+          const origem = window.location.origin;
+          this.linkGerado.set(`${origem}/convite/${res.token}`);
+          this.enviando.set(false);
+        },
+        error: (e) => {
+          this.erro.set(e.error?.detail ?? 'Erro ao gerar convite.');
+          this.enviando.set(false);
+        },
+      });
+  }
+
+  copiarLink(): void {
+    navigator.clipboard.writeText(this.linkGerado()).then(() => {
+      this.copiado.set(true);
+      setTimeout(() => this.copiado.set(false), 2000);
+    });
+  }
+}

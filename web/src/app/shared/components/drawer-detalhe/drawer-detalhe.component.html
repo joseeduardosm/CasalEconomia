@@ -1,0 +1,137 @@
+<div class="drawer-overlay" (click)="fechar.emit()"></div>
+
+<div class="drawer">
+  <div class="drawer__cabecalho">
+    <h3 class="drawer__titulo">{{ filtro.titulo }}</h3>
+    <button class="drawer__fechar" (click)="fechar.emit()">×</button>
+  </div>
+
+  <div class="drawer__corpo">
+    @if (carregando()) {
+      <p class="drawer__estado">Carregando…</p>
+    } @else if (ehDetalheUnico) {
+      <!-- Detalhe de lançamento único -->
+      @let item = itensSorted()[0];
+      @if (item) {
+        <div class="detalhe-unico">
+          <div class="detalhe-unico__linha">
+            <span class="detalhe-unico__rotulo">Descrição</span>
+            <span class="detalhe-unico__valor">{{ item.descricao }}</span>
+          </div>
+          <div class="detalhe-unico__linha">
+            <span class="detalhe-unico__rotulo">Data</span>
+            <span class="detalhe-unico__valor">{{ item.data_lancamento | date:'d/M/yyyy':'':'pt-BR' }}</span>
+          </div>
+          <div class="detalhe-unico__linha">
+            <span class="detalhe-unico__rotulo">Valor</span>
+            <span class="detalhe-unico__valor detalhe-unico__valor--destaque"
+                  [class.detalhe-unico__valor--receita]="item.tipo === 'receita'"
+                  [class.detalhe-unico__valor--despesa]="item.tipo === 'despesa'">
+              {{ item.valor | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
+            </span>
+          </div>
+          <div class="detalhe-unico__linha">
+            <span class="detalhe-unico__rotulo">Tipo</span>
+            <span class="detalhe-unico__valor">{{ item.tipo === 'receita' ? 'Receita' : 'Despesa' }}</span>
+          </div>
+          @if (item.forma_pagamento) {
+            <div class="detalhe-unico__linha">
+              <span class="detalhe-unico__rotulo">Forma de pagamento</span>
+              <span class="detalhe-unico__valor">{{ item.forma_pagamento.replace('_', ' ') }}</span>
+            </div>
+          }
+          @if (item.categoria) {
+            <div class="detalhe-unico__linha">
+              <span class="detalhe-unico__rotulo">Categoria</span>
+              <span class="detalhe-unico__valor">{{ item.categoria }}</span>
+            </div>
+          }
+          @if (item.parcela_atual && item.total_parcelas) {
+            <div class="detalhe-unico__linha">
+              <span class="detalhe-unico__rotulo">Parcelas</span>
+              <span class="detalhe-unico__valor">{{ item.parcela_atual }} de {{ item.total_parcelas }}</span>
+            </div>
+          }
+          @if (item.email_compartilhado) {
+            <div class="detalhe-unico__linha">
+              <span class="detalhe-unico__rotulo">Compartilhado com</span>
+              <span class="detalhe-unico__valor">{{ item.email_compartilhado }}</span>
+            </div>
+          }
+          @if (item.fonte) {
+            <div class="detalhe-unico__linha">
+              <span class="detalhe-unico__rotulo">Fonte</span>
+              <span class="detalhe-unico__valor">{{ item.fonte }}</span>
+            </div>
+          }
+          @if (item.status_receita) {
+            <div class="detalhe-unico__linha">
+              <span class="detalhe-unico__rotulo">Status</span>
+              <span class="detalhe-unico__valor">{{ item.status_receita.replace('_', ' ') }}</span>
+            </div>
+          }
+        </div>
+      }
+    } @else if (itensSorted().length === 0) {
+      <p class="drawer__estado">Nenhum lançamento encontrado.</p>
+    } @else {
+      <!-- Tabela ordenável -->
+      <div class="drawer__tabela-wrap">
+        <table class="drawer__tabela">
+          <thead>
+            <tr>
+              <th (click)="ordenarPor('descricao')" class="th-clicavel">
+                Descrição{{ indicadorOrdem('descricao') }}
+              </th>
+              <th (click)="ordenarPor('data_lancamento')" class="th-clicavel">
+                Data{{ indicadorOrdem('data_lancamento') }}
+              </th>
+              <th (click)="ordenarPor('valor')" class="th-clicavel th-num">
+                Valor{{ indicadorOrdem('valor') }}
+              </th>
+              <th>Forma</th>
+              <th>Categoria</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of itensSorted(); track item.id) {
+              <tr [class.tr-receita]="item.tipo === 'receita'">
+                <td>
+                  {{ item.descricao }}
+                  @if (item.parcela_atual && item.total_parcelas) {
+                    <span class="tag-parcela">({{ item.parcela_atual }}/{{ item.total_parcelas }})</span>
+                  }
+                </td>
+                <td class="td-data">{{ item.data_lancamento | date:'d/M/yy':'':'pt-BR' }}</td>
+                <td class="td-valor"
+                    [class.td-valor--receita]="item.tipo === 'receita'"
+                    [class.td-valor--despesa]="item.tipo === 'despesa'">
+                  {{ item.valor | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
+                </td>
+                <td class="td-tag">
+                  @if (item.forma_pagamento) {
+                    <span class="tag-forma">{{ item.forma_pagamento.replace('_', ' ') }}</span>
+                  }
+                </td>
+                <td class="td-tag">
+                  @if (item.categoria) {
+                    <span class="tag-cat">{{ item.categoria }}</span>
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+
+  @if (!ehDetalheUnico && !carregando() && itensSorted().length > 0) {
+    <div class="drawer__rodape">
+      <span class="drawer__total">
+        Total: <strong>{{ total() | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</strong>
+      </span>
+      <button class="btn-link" (click)="verTodosEmLancamentos()">Ver todos em Lançamentos →</button>
+    </div>
+  }
+</div>

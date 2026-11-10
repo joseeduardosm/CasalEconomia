@@ -1,0 +1,361 @@
+<div class="lancamentos-pagina">
+  <div class="lancamentos-barra">
+    <div class="filtro-tabs">
+      <button class="filtro-tabs__btn" [class.filtro-tabs__btn--ativo]="filtroTipo() === 'todos'" (click)="filtroTipo.set('todos')">Todos</button>
+      <button class="filtro-tabs__btn" [class.filtro-tabs__btn--ativo]="filtroTipo() === 'despesa'" (click)="filtroTipo.set('despesa')">Despesas</button>
+      <button class="filtro-tabs__btn" [class.filtro-tabs__btn--ativo]="filtroTipo() === 'receita'" (click)="filtroTipo.set('receita')">Receitas</button>
+    </div>
+    <button class="btn-secundario" (click)="modalImportar.set(true)">Importar</button>
+  </div>
+
+  @if (carregando()) {
+    <p class="estado-vazio">Carregando…</p>
+  } @else if (agrupados().length === 0) {
+    <p class="estado-vazio">Nenhum lançamento neste mês.</p>
+  } @else {
+    @for (grupo of agrupados(); track grupo[0]) {
+      <div class="grupo">
+        <h3 class="grupo__data">{{ grupo[0] | date:'EEEE, d \'de\' MMMM':'':'pt-BR' }}</h3>
+        @for (item of grupo[1]; track item.id) {
+          <div class="item-lancamento" [class.item-lancamento--receita]="item.tipo === 'receita'">
+            <div class="item-lancamento__info">
+              <span class="item-lancamento__descricao">{{ item.descricao }}</span>
+              @if (item.parcela_atual) {
+                <span class="item-lancamento__tag">{{ item.parcela_atual }}ª parcela</span>
+              }
+              @if (item.email_compartilhado) {
+                <span class="item-lancamento__compartilhado" title="Compartilhado">↔</span>
+              }
+              @if (item.tipo === 'receita' && item.status_receita) {
+                <span class="status-chip status-chip--{{ item.status_receita }}">{{ labelStatusReceita(item.status_receita) }}</span>
+              }
+            </div>
+            <div class="item-lancamento__meta">
+              @if (item.forma_pagamento) {
+                <span class="item-lancamento__tag">{{ item.forma_pagamento.replace('_', ' ') }}</span>
+              }
+              @if (item.categoria) {
+                <span class="item-lancamento__tag">{{ item.categoria }}</span>
+              }
+              @if (item.fonte) {
+                <span class="item-lancamento__tag item-lancamento__tag--fonte">{{ item.fonte }}</span>
+              }
+            </div>
+            <div class="item-lancamento__direita">
+              <span class="item-lancamento__valor" [class.item-lancamento__valor--receita]="item.tipo === 'receita'">
+                {{ item.valor | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
+              </span>
+              @if (podeMarcarRecebido(item)) {
+                <button class="btn-marcar-recebido" (click)="marcarRecebido(item)" title="Marcar como recebido">✓</button>
+              }
+              <button class="btn-excluir" (click)="excluir(item.id)" title="Excluir">×</button>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  }
+
+  <!-- FAB expansível -->
+  <div class="fab-container" [class.fab-container--aberto]="fabAberto()">
+    @if (fabAberto()) {
+      <div class="fab-backdrop" (click)="fabAberto.set(false)"></div>
+      <div class="fab-menu">
+        <button class="fab-sub" (click)="abrirCriarReceita()">
+          <span class="fab-sub__icone fab-sub__icone--receita">↑</span>
+          <span class="fab-sub__rotulo">Receita</span>
+        </button>
+        <button class="fab-sub" (click)="abrirCriarDespesa()">
+          <span class="fab-sub__icone fab-sub__icone--despesa">↓</span>
+          <span class="fab-sub__rotulo">Despesa</span>
+        </button>
+      </div>
+    }
+    <button class="fab" (click)="fabAberto.set(!fabAberto())" title="Novo lançamento">
+      {{ fabAberto() ? '×' : '+' }}
+    </button>
+  </div>
+</div>
+
+<!-- Modal criar despesa -->
+@if (modalCriar()) {
+  <div class="modal-overlay" (click)="modalCriar.set(false)">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <div class="modal__cabecalho">
+        <h2 class="modal__titulo">Nova despesa</h2>
+        <button class="modal__fechar" (click)="modalCriar.set(false)">×</button>
+      </div>
+
+      <div class="modal__corpo">
+        <section class="modal-secao">
+          <div class="campo">
+            <label class="campo__rotulo">Descrição *</label>
+            <input class="campo__input" type="text" [ngModel]="descricao()" (ngModelChange)="descricao.set($event)" name="descricao" maxlength="200" />
+          </div>
+          <div class="modal-linha">
+            <div class="campo">
+              <label class="campo__rotulo">Data *</label>
+              <input class="campo__input" type="date" [ngModel]="dataLancamento()" (ngModelChange)="dataLancamento.set($event)" name="data" />
+            </div>
+            <div class="campo">
+              <label class="campo__rotulo">Valor (R$) *</label>
+              <input class="campo__input" type="number" step="0.01" min="0" [ngModel]="valor()" (ngModelChange)="valor.set($event)" name="valor" />
+            </div>
+          </div>
+
+          @if (mostrarParcelamento) {
+            <div class="campo">
+              <label class="campo__check">
+                <input type="checkbox" [ngModel]="parcelado()" (ngModelChange)="parcelado.set($event)" name="parcelado" />
+                Parcelado
+              </label>
+            </div>
+            @if (parcelado()) {
+              <div class="modal-linha">
+                <div class="campo">
+                  <label class="campo__rotulo">Total de parcelas</label>
+                  <input class="campo__input" type="number" min="2" max="60" [ngModel]="totalParcelas()" (ngModelChange)="totalParcelas.set(+$event)" name="total_parcelas" />
+                </div>
+                <div class="campo">
+                  <label class="campo__rotulo" title="Use > 1 para importar compra já iniciada">A partir da parcela Nº</label>
+                  <input class="campo__input" type="number" min="1" [max]="totalParcelas()" [ngModel]="parcelaInicio()" (ngModelChange)="parcelaInicio.set(+$event)" name="parcela_inicio" />
+                </div>
+              </div>
+            }
+          }
+        </section>
+
+        <section class="modal-secao">
+          <div class="modal-linha">
+            <div class="campo">
+              <label class="campo__rotulo">Forma de pagamento</label>
+              <select class="campo__input" [ngModel]="formaPagamento()" (ngModelChange)="formaPagamento.set($event)" name="forma">
+                <option value="">Não informado</option>
+                <option value="dinheiro">Dinheiro</option>
+                <option value="pix">Pix</option>
+                <option value="boleto">Boleto</option>
+                <option value="cartao_debito">Cartão Débito</option>
+                <option value="cartao_credito">Cartão Crédito</option>
+                <option value="transferencia">Transferência</option>
+              </select>
+            </div>
+            @if (mostrarCartao) {
+              <div class="campo">
+                <label class="campo__rotulo">Cartão</label>
+                <select class="campo__input" [ngModel]="cartaoId()" (ngModelChange)="cartaoId.set($event)" name="cartao">
+                  <option value="">Selecionar</option>
+                  @for (c of cartoes(); track c.cartao.id) {
+                    <option [value]="c.cartao.id">{{ c.cartao.nome }}</option>
+                  }
+                </select>
+              </div>
+            }
+          </div>
+
+          @if (formaPagamento() !== 'cartao_credito' && formaPagamento()) {
+            <div class="campo">
+              <label class="campo__check">
+                <input type="checkbox" [ngModel]="liquidado()" (ngModelChange)="liquidado.set($event)" name="liquidado" />
+                Já pago
+              </label>
+            </div>
+          }
+
+          <div class="modal-linha">
+            <div class="campo">
+              <label class="campo__rotulo">Categoria</label>
+              <input class="campo__input" type="text" [ngModel]="categoria()" (ngModelChange)="categoria.set($event)" name="categoria" />
+            </div>
+          </div>
+
+          <div class="campo">
+            <label class="campo__rotulo">Nota</label>
+            <textarea class="campo__input campo__input--textarea" rows="2" [ngModel]="nota()" (ngModelChange)="nota.set($event)" name="nota"></textarea>
+          </div>
+
+          <div class="modal-compartilhamento">
+            <h4 class="modal-compartilhamento__titulo">Compartilhar com parceiro</h4>
+            <div class="campo">
+              <label class="campo__rotulo">E-mail do parceiro</label>
+              <input class="campo__input" type="email" [ngModel]="emailCompartilhado()" (ngModelChange)="emailCompartilhado.set($event)" name="email_comp" placeholder="parceiro@email.com" />
+            </div>
+            @if (emailCompartilhado()) {
+              <div class="modal-linha">
+                <div class="campo">
+                  <label class="campo__rotulo">% do parceiro</label>
+                  <input class="campo__input" type="number" min="0" max="100" [ngModel]="percentualCompartilhado()" (ngModelChange)="percentualCompartilhado.set(+$event)" name="pct_comp" />
+                </div>
+                <div class="campo">
+                  <label class="campo__rotulo">Parceiro paga</label>
+                  <div class="campo__preview">{{ valorParceiro() | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</div>
+                </div>
+              </div>
+            }
+          </div>
+        </section>
+      </div>
+
+      @if (erroCriar()) {
+        <p class="modal__erro">{{ erroCriar() }}</p>
+      }
+
+      <div class="modal__rodape">
+        <button class="btn-terciario" (click)="modalCriar.set(false)">Cancelar</button>
+        <button class="btn-secundario" (click)="salvar(true)" [disabled]="enviandoCriar()">Salvar e continuar</button>
+        <button class="btn-primario" (click)="salvar(false)" [disabled]="enviandoCriar()">
+          {{ enviandoCriar() ? 'Salvando…' : 'Salvar' }}
+        </button>
+      </div>
+    </div>
+  </div>
+}
+
+<!-- Modal criar receita -->
+@if (modalCriarReceita()) {
+  <div class="modal-overlay" (click)="modalCriarReceita.set(false)">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <div class="modal__cabecalho">
+        <h2 class="modal__titulo">Nova receita</h2>
+        <button class="modal__fechar" (click)="modalCriarReceita.set(false)">×</button>
+      </div>
+
+      <div class="modal__corpo">
+        <section class="modal-secao">
+          <div class="campo">
+            <label class="campo__rotulo">Descrição *</label>
+            <input class="campo__input" type="text" [ngModel]="descricaoReceita()" (ngModelChange)="descricaoReceita.set($event)" name="desc_r" maxlength="200" />
+          </div>
+          <div class="modal-linha">
+            <div class="campo">
+              <label class="campo__rotulo">Data *</label>
+              <input class="campo__input" type="date" [ngModel]="dataReceita()" (ngModelChange)="dataReceita.set($event)" name="data_r" />
+            </div>
+            <div class="campo">
+              <label class="campo__rotulo">Valor esperado (R$) *</label>
+              <input class="campo__input" type="number" step="0.01" min="0" [ngModel]="valorReceita()" (ngModelChange)="valorReceita.set($event)" name="valor_r" />
+            </div>
+          </div>
+          <div class="campo">
+            <label class="campo__rotulo">Fonte</label>
+            <select class="campo__input" [ngModel]="fonteReceita()" (ngModelChange)="fonteReceita.set($event)" name="fonte_r">
+              <option value="">Não informado</option>
+              <option value="Salário">Salário</option>
+              <option value="Freelance">Freelance</option>
+              <option value="Aluguel">Aluguel</option>
+              <option value="Investimento">Investimento</option>
+              <option value="Pensão">Pensão</option>
+              <option value="Outro">Outro</option>
+            </select>
+          </div>
+        </section>
+
+        <section class="modal-secao">
+          <div class="campo">
+            <label class="campo__check">
+              <input type="checkbox" [ngModel]="liquidadoReceita()" (ngModelChange)="liquidadoReceita.set($event)" name="liquidado_r" />
+              Já recebido
+            </label>
+          </div>
+          @if (liquidadoReceita()) {
+            <div class="campo">
+              <label class="campo__rotulo">Valor recebido (R$)</label>
+              <input class="campo__input" type="number" step="0.01" min="0" [ngModel]="valorRecebidoReceita()" (ngModelChange)="valorRecebidoReceita.set($event)" name="vr_r" placeholder="Deixe vazio para usar o valor total" />
+            </div>
+          }
+          <div class="campo">
+            <label class="campo__rotulo">Categoria</label>
+            <input class="campo__input" type="text" [ngModel]="categoriaReceita()" (ngModelChange)="categoriaReceita.set($event)" name="cat_r" />
+          </div>
+          <div class="campo">
+            <label class="campo__rotulo">Nota</label>
+            <textarea class="campo__input campo__input--textarea" rows="2" [ngModel]="notaReceita()" (ngModelChange)="notaReceita.set($event)" name="nota_r"></textarea>
+          </div>
+        </section>
+      </div>
+
+      @if (erroCriarReceita()) {
+        <p class="modal__erro">{{ erroCriarReceita() }}</p>
+      }
+
+      <div class="modal__rodape">
+        <button class="btn-terciario" (click)="modalCriarReceita.set(false)">Cancelar</button>
+        <button class="btn-secundario" (click)="salvarReceita(true)" [disabled]="enviandoCriarReceita()">Salvar e continuar</button>
+        <button class="btn-primario btn-primario--verde" (click)="salvarReceita(false)" [disabled]="enviandoCriarReceita()">
+          {{ enviandoCriarReceita() ? 'Salvando…' : 'Salvar' }}
+        </button>
+      </div>
+    </div>
+  </div>
+}
+
+<!-- Modal importar -->
+@if (modalImportar()) {
+  <div class="modal-overlay" (click)="modalImportar.set(false)">
+    <div class="modal modal--grande" (click)="$event.stopPropagation()">
+      <div class="modal__cabecalho">
+        <h2 class="modal__titulo">{{ etapaImportar() === 1 ? 'Importar lançamentos' : 'Revise os lançamentos' }}</h2>
+        <button class="modal__fechar" (click)="modalImportar.set(false)">×</button>
+      </div>
+
+      @if (etapaImportar() === 1) {
+        <div class="modal__corpo">
+          <p class="modal__desc">Baixe o modelo, preencha e envie o arquivo .xlsx.</p>
+          <button class="btn-secundario" (click)="baixarModelo()">Baixar modelo</button>
+          <div class="dropzone">
+            <label for="arquivo-input" class="dropzone__label">
+              @if (carregandoImportar()) {
+                <span>Validando…</span>
+              } @else {
+                <span>Arraste o arquivo .xlsx ou clique para selecionar</span>
+              }
+            </label>
+            <input id="arquivo-input" type="file" accept=".xlsx" (change)="onArquivoSelecionado($event)" [disabled]="carregandoImportar()" />
+          </div>
+        </div>
+      } @else {
+        <div class="modal__corpo">
+          <p class="modal__desc">
+            <strong>{{ linhasValidas().length }} lançamentos válidos</strong>
+            @if (linhasComErro().length > 0) { · <span class="texto-erro">{{ linhasComErro().length }} com problema</span> }
+          </p>
+          <div class="tabela-importacao">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nº</th><th>Descrição</th><th>Data</th><th>Valor</th>
+                  <th>Parcela</th><th>Categoria</th><th>Problema</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (linha of linhasValidas(); track $index) {
+                  <tr>
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ linha.descricao }}</td>
+                    <td>{{ linha.data_lancamento }}</td>
+                    <td>{{ linha.valor }}</td>
+                    <td>{{ linha.parcela_atual ? linha.parcela_atual + '/' + linha.total_parcelas : '-' }}</td>
+                    <td>{{ linha.categoria || '-' }}</td>
+                    <td>-</td>
+                  </tr>
+                }
+                @for (linha of linhasComErro(); track $index) {
+                  <tr class="linha-erro">
+                    <td>{{ linha.numero_linha }}</td>
+                    <td colspan="5">—</td>
+                    <td class="texto-erro">{{ linha.problema }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal__rodape">
+          <button class="btn-terciario" (click)="etapaImportar.set(1)">Voltar</button>
+          <button class="btn-primario" (click)="confirmarImportacao()" [disabled]="enviandoImportar() || linhasValidas().length === 0">
+            {{ enviandoImportar() ? 'Importando…' : 'Confirmar ' + linhasValidas().length + ' lançamentos' }}
+          </button>
+        </div>
+      }
+    </div>
+  </div>
+}

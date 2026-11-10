@@ -1,8 +1,34 @@
-/* Painel — estilos embutidos no componente; arquivo mantido para futuras adições. */
+.painel-pagina {
+  padding: 24px;
+  position: relative;
+}
 
-.descricao {
+.estado-carregando {
   font-size: 14px;
   color: var(--color-warm-gray);
-  line-height: 1.64;
-  margin-bottom: var(--spacing-24);
+  padding: 48px 0;
+  text-align: center;
+}
+
+.painel-grade {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 16px;
+  align-items: start;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+
+  &__principal {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  &__lateral {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
 }

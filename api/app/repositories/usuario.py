@@ -8,13 +8,15 @@ para que no projeto: busca usuário por e-mail (usado no login) e cria novos
                      registros na tabela `users` (usado no cadastro).
 """
 
+from uuid import UUID
 from sqlalchemy.orm import Session
 
 from app.models.usuario import Usuario
 
 
-def buscar_por_email(db: Session, email: str) -> Usuario | None:
-    """Retorna o usuário com o e-mail informado, ou None se não existir."""
+def buscar_por_email(db: Session, email: str | None, usuario_id: UUID | None = None) -> Usuario | None:
+    if usuario_id is not None:
+        return db.query(Usuario).filter(Usuario.id == usuario_id).first()
     return db.query(Usuario).filter(Usuario.email == email).first()
 
 

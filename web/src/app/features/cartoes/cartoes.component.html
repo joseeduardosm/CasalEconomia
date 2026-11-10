@@ -1,0 +1,89 @@
+<div class="cartoes-pagina">
+  <div class="cartoes-cabecalho">
+    <h2 class="cartoes-cabecalho__titulo">Meus cartões</h2>
+    <button class="btn-primario" (click)="mostrarFormulario.set(!mostrarFormulario())">
+      {{ mostrarFormulario() ? 'Cancelar' : '+ Novo cartão' }}
+    </button>
+  </div>
+
+  @if (mostrarFormulario()) {
+    <div class="cartao-form-box">
+      <h3 class="cartao-form-box__titulo">Novo cartão</h3>
+      <div class="cartao-form">
+        <div class="campo">
+          <label class="campo__rotulo">Nome</label>
+          <input class="campo__input" type="text" placeholder="Ex: Nubank" [ngModel]="nome()" (ngModelChange)="nome.set($event)" name="nome" />
+        </div>
+        <div class="campo">
+          <label class="campo__rotulo">Bandeira</label>
+          <select class="campo__input" [ngModel]="bandeira()" (ngModelChange)="bandeira.set($event)" name="bandeira">
+            <option value="visa">Visa</option>
+            <option value="mastercard">Mastercard</option>
+            <option value="elo">Elo</option>
+            <option value="amex">Amex</option>
+            <option value="hipercard">Hipercard</option>
+            <option value="outro">Outro</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label class="campo__rotulo">Limite (R$)</label>
+          <input class="campo__input" type="number" step="0.01" [ngModel]="limite()" (ngModelChange)="limite.set($event)" name="limite" />
+        </div>
+        <div class="campo">
+          <label class="campo__rotulo">Dia fechamento</label>
+          <input class="campo__input" type="number" min="1" max="28" [ngModel]="diaFechamento()" (ngModelChange)="diaFechamento.set(+$event)" name="fechamento" />
+        </div>
+        <div class="campo">
+          <label class="campo__rotulo">Dia vencimento</label>
+          <input class="campo__input" type="number" min="1" max="28" [ngModel]="diaVencimento()" (ngModelChange)="diaVencimento.set(+$event)" name="vencimento" />
+        </div>
+        <div class="campo">
+          <label class="campo__rotulo">Cor</label>
+          <input class="campo__input campo__input--cor" type="color" [ngModel]="cor()" (ngModelChange)="cor.set($event)" name="cor" />
+        </div>
+      </div>
+      @if (erro()) {
+        <p class="cartao-form-box__erro">{{ erro() }}</p>
+      }
+      <button class="btn-primario" (click)="criarCartao()" [disabled]="enviando()">
+        {{ enviando() ? 'Salvando…' : 'Salvar cartão' }}
+      </button>
+    </div>
+  }
+
+  @if (carregando()) {
+    <p class="estado-vazio">Carregando…</p>
+  } @else if (cartoes().length === 0) {
+    <p class="estado-vazio">Nenhum cartão cadastrado.</p>
+  } @else {
+    <div class="cartoes-grid">
+      @for (item of cartoes(); track item.cartao.id) {
+        <div class="cartao-card">
+          <div class="cartao-card__faixa" [style.background]="item.cartao.cor"></div>
+          <div class="cartao-card__corpo">
+            <div class="cartao-card__linha">
+              <span class="cartao-card__nome">{{ item.cartao.nome }}</span>
+              <span class="cartao-card__bandeira">{{ item.cartao.bandeira }}</span>
+            </div>
+            <div class="cartao-card__limite">
+              <span class="cartao-card__label">Disponível</span>
+              <span class="cartao-card__valor">{{ item.limite_disponivel | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
+            </div>
+            @if (item.fatura_atual) {
+              <div class="cartao-card__fatura">
+                <span
+                  class="cartao-card__status"
+                  [style.color]="statusCores[item.fatura_atual.status]"
+                >{{ statusRotulo(item.fatura_atual.status) }}</span>
+                <span class="cartao-card__venc">Vence {{ item.fatura_atual.data_vencimento | date:'dd/MM' }}</span>
+              </div>
+            }
+            <div class="cartao-card__acoes">
+              <button class="btn-link" (click)="verFatura(item)">Ver fatura</button>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

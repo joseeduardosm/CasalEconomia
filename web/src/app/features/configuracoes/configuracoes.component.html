@@ -1,0 +1,55 @@
+<section class="config-secao">
+  <h2 class="config-secao__titulo">Convidar parceiro</h2>
+  <p class="config-secao__desc">
+    Informe o nome e e-mail do seu parceiro para gerar um link de convite único.
+  </p>
+
+  <form class="config-form" (ngSubmit)="gerarConvite()">
+    <div class="campo">
+      <label class="campo__rotulo">Nome do convidado</label>
+      <input
+        class="campo__input"
+        type="text"
+        placeholder="Ex: Maria"
+        [ngModel]="nomeConvidado()"
+        (ngModelChange)="nomeConvidado.set($event)"
+        name="nome"
+        required
+      />
+    </div>
+
+    <div class="campo">
+      <label class="campo__rotulo">E-mail do convidado</label>
+      <input
+        class="campo__input"
+        type="email"
+        placeholder="maria@email.com"
+        [ngModel]="emailConvidado()"
+        (ngModelChange)="emailConvidado.set($event)"
+        name="email"
+        required
+      />
+    </div>
+
+    @if (erro()) {
+      <p class="config-form__erro">{{ erro() }}</p>
+    }
+
+    <button class="btn-primario" type="submit" [disabled]="enviando()">
+      {{ enviando() ? 'Gerando…' : 'Gerar link de convite' }}
+    </button>
+  </form>
+
+  @if (linkGerado()) {
+    <div class="config-link-box">
+      <p class="config-link-box__rotulo">Link de convite gerado:</p>
+      <div class="config-link-box__linha">
+        <input class="campo__input config-link-box__campo" type="text" [value]="linkGerado()" readonly />
+        <button class="btn-secundario" type="button" (click)="copiarLink()">
+          {{ copiado() ? 'Copiado!' : 'Copiar' }}
+        </button>
+      </div>
+      <p class="config-link-box__aviso">Este link é de uso único. Compartilhe com seu parceiro.</p>
+    </div>
+  }
+</section>

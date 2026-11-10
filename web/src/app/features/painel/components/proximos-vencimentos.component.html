@@ -1,0 +1,24 @@
+<div class="widget">
+  <h3 class="widget__titulo">Próximos vencimentos</h3>
+
+  @if (vencimentos.length === 0) {
+    <p class="widget__vazio">Nenhum vencimento nos próximos 14 dias.</p>
+  } @else {
+    @for (item of vencimentos; track item.id) {
+      <div class="venc-item"
+           [class.venc-item--vencido]="item.vencido"
+           [class.venc-item--urgente]="!item.vencido && item.dias_para_vencer <= 5"
+           (click)="abrirDetalhe(item)">
+        <div class="venc-item__info">
+          <span class="venc-item__descricao">{{ item.descricao }}</span>
+          <span class="venc-item__badge" [class.venc-item__badge--vencido]="item.vencido">
+            {{ labelVencimento(item) }}
+          </span>
+        </div>
+        <span class="venc-item__valor" [class.venc-item__valor--receita]="item.tipo === 'receita'">
+          {{ item.valor | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
+        </span>
+      </div>
+    }
+  }
+</div>

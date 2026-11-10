@@ -1,0 +1,76 @@
+@if (carregando()) {
+  <div class="fatura-loading"><p>Carregando fatura…</p></div>
+} @else if (!fatura()) {
+  <div class="fatura-loading"><p>Fatura não encontrada.</p></div>
+} @else {
+  <div class="fatura-pagina">
+    <a routerLink="/cartoes" class="btn-voltar">← Voltar para cartões</a>
+
+    <div class="fatura-resumo">
+      <div class="fatura-resumo__item">
+        <span class="fatura-resumo__rotulo">Período</span>
+        <span class="fatura-resumo__valor">{{ fatura().periodo }}</span>
+      </div>
+      <div class="fatura-resumo__item">
+        <span class="fatura-resumo__rotulo">Vencimento</span>
+        <span class="fatura-resumo__valor">{{ fatura().data_vencimento | date:'dd/MM/yyyy' }}</span>
+      </div>
+      <div class="fatura-resumo__item">
+        <span class="fatura-resumo__rotulo">Total</span>
+        <span class="fatura-resumo__valor">{{ fatura().valor_total | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
+      </div>
+      <div class="fatura-resumo__item">
+        <span class="fatura-resumo__rotulo">Pago</span>
+        <span class="fatura-resumo__valor fatura-resumo__valor--pago">{{ fatura().valor_pago | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
+      </div>
+      <div class="fatura-resumo__item fatura-resumo__item--destaque">
+        <span class="fatura-resumo__rotulo">Restante</span>
+        <span class="fatura-resumo__valor fatura-resumo__valor--destaque">{{ fatura().valor_restante | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
+      </div>
+      <div class="fatura-resumo__item">
+        <span class="fatura-resumo__rotulo">Status</span>
+        <span class="fatura-resumo__status" [style.color]="statusCores[fatura().status]">
+          {{ fatura().status.replace('_', ' ') }}
+        </span>
+      </div>
+    </div>
+
+    @if (fatura().status !== 'paga') {
+      <div class="fatura-pagar">
+        <h3 class="fatura-pagar__titulo">Registrar pagamento</h3>
+        <div class="fatura-pagar__linha">
+          <input
+            class="campo__input"
+            type="number"
+            step="0.01"
+            min="0"
+            placeholder="Valor (R$)"
+            [ngModel]="valorPagamento()"
+            (ngModelChange)="valorPagamento.set($event)"
+            name="valor"
+          />
+          <button class="btn-primario" (click)="pagar()" [disabled]="enviando()">
+            {{ enviando() ? 'Registrando…' : 'Pagar' }}
+          </button>
+        </div>
+        @if (erro()) { <p class="fatura-pagar__erro">{{ erro() }}</p> }
+        @if (mensagem()) { <p class="fatura-pagar__sucesso">{{ mensagem() }}</p> }
+      </div>
+    }
+
+    <div class="fatura-lancamentos">
+      <h3 class="fatura-lancamentos__titulo">Lançamentos ({{ fatura().lancamentos.length }})</h3>
+      @if (fatura().lancamentos.length === 0) {
+        <p class="estado-vazio">Nenhum lançamento nesta fatura.</p>
+      } @else {
+        @for (lanc of fatura().lancamentos; track lanc.id) {
+          <div class="fatura-item">
+            <span class="fatura-item__descricao">{{ lanc.descricao }}</span>
+            <span class="fatura-item__data">{{ lanc.data_lancamento | date:'dd/MM' }}</span>
+            <span class="fatura-item__valor">{{ lanc.valor | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
+          </div>
+        }
+      }
+    </div>
+  </div>
+}

@@ -1,0 +1,203 @@
+.drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.3);
+  z-index: 200;
+}
+
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 480px;
+  max-width: 100vw;
+  background: var(--color-bg-surface);
+  border-left: 1px solid var(--color-border);
+  box-shadow: -4px 0 24px rgba(0,0,0,0.12);
+  z-index: 201;
+  display: flex;
+  flex-direction: column;
+  animation: slideIn 0.22s ease;
+
+  @media (max-width: 768px) {
+    top: auto;
+    bottom: 0;
+    right: 0;
+    width: 100vw;
+    height: 80vh;
+    border-left: none;
+    border-top: 1px solid var(--color-border);
+    border-radius: 16px 16px 0 0;
+    animation: slideUp 0.22s ease;
+  }
+
+  &__cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--color-border);
+    flex-shrink: 0;
+  }
+
+  &__titulo {
+    font-family: var(--font-heading);
+    font-size: 17px;
+    font-weight: 400;
+    color: var(--color-text-primary);
+  }
+
+  &__fechar {
+    background: none;
+    border: none;
+    font-size: 22px;
+    color: var(--color-warm-gray);
+    cursor: pointer;
+    &:hover { color: var(--color-text-primary); }
+  }
+
+  &__corpo {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 20px;
+  }
+
+  &__estado {
+    font-size: 14px;
+    color: var(--color-warm-gray);
+    padding: 32px 0;
+    text-align: center;
+  }
+
+  &__tabela-wrap {
+    overflow-x: auto;
+  }
+
+  &__tabela {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+
+    th {
+      text-align: left;
+      padding: 8px 10px;
+      background: var(--color-bg-page);
+      color: var(--color-warm-gray);
+      font-weight: 500;
+      white-space: nowrap;
+      border-bottom: 1px solid var(--color-border);
+
+      &.th-clicavel {
+        cursor: pointer;
+        user-select: none;
+        &:hover { color: var(--color-text-primary); }
+      }
+
+      &.th-num { text-align: right; }
+    }
+
+    td {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--color-border);
+      color: var(--color-text-primary);
+      vertical-align: middle;
+    }
+  }
+
+  &__rodape {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    border-top: 1px solid var(--color-border);
+    flex-shrink: 0;
+  }
+
+  &__total {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+
+    strong { color: var(--color-text-primary); font-size: 15px; }
+  }
+}
+
+.tr-receita { background: rgba(34,197,94,0.03); }
+
+.td-data { white-space: nowrap; color: var(--color-warm-gray); }
+
+.td-valor {
+  text-align: right;
+  font-weight: 600;
+  white-space: nowrap;
+
+  &--receita { color: #22c55e; }
+  &--despesa { color: var(--color-text-primary); }
+}
+
+.td-tag { white-space: nowrap; }
+
+.tag-parcela {
+  font-size: 11px;
+  color: var(--color-warm-gray);
+  margin-left: 6px;
+}
+
+.tag-forma, .tag-cat {
+  font-size: 11px;
+  color: var(--color-warm-gray);
+  background: var(--color-bg-page);
+  padding: 2px 7px;
+  border-radius: 999px;
+}
+
+.detalhe-unico {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  &__linha {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--color-border);
+
+    &:last-child { border-bottom: none; padding-bottom: 0; }
+  }
+
+  &__rotulo {
+    font-size: 13px;
+    color: var(--color-warm-gray);
+  }
+
+  &__valor {
+    font-size: 14px;
+    color: var(--color-text-primary);
+    text-align: right;
+    max-width: 60%;
+
+    &--destaque { font-size: 18px; font-weight: 700; }
+    &--receita { color: #22c55e; }
+    &--despesa { color: var(--color-text-primary); }
+  }
+}
+
+.btn-link {
+  background: none;
+  border: none;
+  color: var(--color-brand);
+  font-size: 13px;
+  cursor: pointer;
+  &:hover { text-decoration: underline; }
+}
+
+@keyframes slideIn {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}

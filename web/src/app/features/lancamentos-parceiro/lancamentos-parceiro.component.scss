@@ -1,0 +1,116 @@
+.estado-vazio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+
+  &__texto {
+    font-size: 14px;
+    color: var(--color-warm-gray);
+  }
+}
+
+.lista-pendentes {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px;
+  max-width: 600px;
+}
+
+.card-pendente {
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 16px;
+  transition: opacity 0.2s;
+
+  &--processando {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  &__info {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 6px;
+  }
+
+  &__descricao {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+  }
+
+  &__valor {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    white-space: nowrap;
+  }
+
+  &__meta {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+
+  &__data {
+    font-size: 12px;
+    color: var(--color-warm-gray);
+  }
+
+  &__tipo {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-danger, #e53e3e);
+    background: rgba(229, 62, 62, 0.08);
+    padding: 2px 8px;
+    border-radius: 999px;
+
+    &--receita {
+      color: #2f8f4e;
+      background: rgba(47, 143, 78, 0.08);
+    }
+  }
+
+  &__acoes {
+    display: flex;
+    gap: 8px;
+  }
+}
+
+.btn-aceitar {
+  padding: 8px 18px;
+  background: var(--color-brand);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-pill);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.15s;
+
+  &:hover:not(:disabled) { opacity: 0.88; }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+.btn-ignorar {
+  padding: 8px 18px;
+  background: transparent;
+  color: var(--color-warm-gray);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.15s;
+
+  &:hover:not(:disabled) { border-color: var(--color-warm-gray); }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}

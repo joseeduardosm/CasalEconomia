@@ -27,6 +27,11 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/auth/cadastro/cadastro.component').then((m) => m.CadastroComponent),
   },
+  {
+    path: 'convite/:token',
+    loadComponent: () =>
+      import('./features/convite/convite.component').then((m) => m.ConviteComponent),
+  },
 
   // Rotas autenticadas — dentro do AppShell (ConchaComponent)
   {
@@ -59,6 +64,12 @@ export const routes: Routes = [
           import('./features/cartoes/cartoes.component').then((m) => m.CartoesComponent),
       },
       {
+        path: 'cartoes/:id/fatura',
+        data: { titulo: 'Fatura' },
+        loadComponent: () =>
+          import('./features/cartoes/fatura/fatura.component').then((m) => m.FaturaComponent),
+      },
+      {
         path: 'metas',
         data: { titulo: 'Metas' },
         loadComponent: () =>
@@ -81,6 +92,20 @@ export const routes: Routes = [
         data: { titulo: 'Configurações' },
         loadComponent: () =>
           import('./features/configuracoes/configuracoes.component').then((m) => m.ConfiguracoesComponent),
+      },
+      {
+        path: 'changelog',
+        data: { titulo: 'Changelog' },
+        loadComponent: () =>
+          import('./features/changelog/changelog.component').then((m) => m.ChangelogComponent),
+      },
+      {
+        path: 'lancamentos-parceiro',
+        data: { titulo: 'Lançamentos do Parceiro' },
+        loadComponent: () =>
+          import('./features/lancamentos-parceiro/lancamentos-parceiro.component').then(
+            (m) => m.LancamentosParceiroComponent
+          ),
       },
     ],
   },

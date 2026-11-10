@@ -1,0 +1,75 @@
+<div class="changelog">
+
+  <!-- Navegação por data (desktop: lateral | mobile: horizontal) -->
+  <nav class="changelog__nav">
+    <p class="changelog__nav-titulo">Histórico</p>
+    @for (dia of dias(); track dia.data) {
+      <button
+        class="changelog__nav-item"
+        [class.changelog__nav-item--ativo]="diaAtivo() === dia.data"
+        (click)="irPara(dia.data)"
+      >
+        <span class="changelog__nav-data">{{ dia.dataFormatada }}</span>
+        <span class="changelog__nav-badges">
+          @for (v of dia.versoes; track v.versao) {
+            <span class="changelog__badge">v{{ v.versao }}</span>
+          }
+        </span>
+      </button>
+    }
+  </nav>
+
+  <!-- Entradas do diário -->
+  <div class="changelog__diario">
+    @for (dia of dias(); track dia.data) {
+      <section class="changelog__dia" [id]="'dia-' + dia.data">
+        <div class="changelog__dia-cabecalho">
+          <time class="changelog__dia-data">{{ dia.dataFormatada }}</time>
+        </div>
+
+        @for (entrada of dia.versoes; track entrada.versao) {
+          <article class="changelog__versao">
+            <div class="changelog__versao-topo">
+              <span class="changelog__versao-num">v{{ entrada.versao }}</span>
+              <h2 class="changelog__versao-titulo">{{ entrada.titulo }}</h2>
+            </div>
+
+            @if (entrada.adicionado.length > 0) {
+              <div class="changelog__secao changelog__secao--adicionado">
+                <span class="changelog__secao-label">Adicionado</span>
+                <ul class="changelog__lista">
+                  @for (item of entrada.adicionado; track item) {
+                    <li>{{ item }}</li>
+                  }
+                </ul>
+              </div>
+            }
+
+            @if (entrada.alterado.length > 0) {
+              <div class="changelog__secao changelog__secao--alterado">
+                <span class="changelog__secao-label">Alterado</span>
+                <ul class="changelog__lista">
+                  @for (item of entrada.alterado; track item) {
+                    <li>{{ item }}</li>
+                  }
+                </ul>
+              </div>
+            }
+
+            @if (entrada.corrigido.length > 0) {
+              <div class="changelog__secao changelog__secao--corrigido">
+                <span class="changelog__secao-label">Corrigido</span>
+                <ul class="changelog__lista">
+                  @for (item of entrada.corrigido; track item) {
+                    <li>{{ item }}</li>
+                  }
+                </ul>
+              </div>
+            }
+          </article>
+        }
+      </section>
+    }
+  </div>
+
+</div>

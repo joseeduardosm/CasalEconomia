@@ -1,0 +1,121 @@
+.widget {
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 16px;
+
+  &__titulo {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 14px;
+  }
+
+  &__vazio {
+    font-size: 13px;
+    color: var(--color-warm-gray);
+    padding: 12px 0;
+  }
+}
+
+.fatura-item {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  margin-bottom: 8px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: box-shadow 0.15s;
+
+  &:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+
+  &--alerta { background: rgba(239,68,68,0.04); }
+
+  &__faixa {
+    width: 4px;
+    align-self: stretch;
+    flex-shrink: 0;
+  }
+
+  &__conteudo {
+    flex: 1;
+    padding: 10px 12px;
+  }
+
+  &__topo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+
+  &__nome {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    flex: 1;
+  }
+
+  &__alerta {
+    color: #ef4444;
+    font-size: 14px;
+  }
+
+  &__status {
+    font-size: 11px;
+    padding: 2px 7px;
+    border-radius: 999px;
+
+    &--aberta { background: rgba(59,130,246,0.1); color: #3b82f6; }
+    &--fechada { background: rgba(107,114,128,0.1); color: #6b7280; }
+    &--parcialmente_paga { background: rgba(245,158,11,0.1); color: #d97706; }
+    &--vencida { background: rgba(239,68,68,0.1); color: #dc2626; }
+  }
+
+  &__valores {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+
+  &__restante {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--color-text-primary);
+  }
+
+  &__venc {
+    font-size: 12px;
+    color: var(--color-warm-gray);
+  }
+
+  &__barra {
+    height: 4px;
+    background: var(--color-bg-page);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  &__barra-pago {
+    height: 100%;
+    background: #22c55e;
+    border-radius: 2px;
+    transition: width 0.3s;
+  }
+}
+
+.btn-ver-fatura {
+  background: none;
+  border: none;
+  color: var(--color-brand);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 0 12px;
+  white-space: nowrap;
+  &:hover { text-decoration: underline; }
+}

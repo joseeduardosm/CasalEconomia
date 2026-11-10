@@ -1,0 +1,96 @@
+.fatura-loading { display: flex; justify-content: center; padding: 48px; color: var(--color-warm-gray); font-size: 14px; }
+
+.fatura-pagina { padding: 24px; max-width: 600px; }
+
+.btn-voltar {
+  display: inline-flex;
+  align-items: center;
+  font-size: 13px;
+  color: var(--color-brand);
+  text-decoration: none;
+  margin-bottom: 20px;
+  &:hover { text-decoration: underline; }
+}
+
+.fatura-resumo {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 20px;
+  margin-bottom: 20px;
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    &--destaque { grid-column: span 1; }
+  }
+
+  &__rotulo { font-size: 11px; color: var(--color-warm-gray); text-transform: uppercase; letter-spacing: 0.04em; }
+  &__valor { font-size: 16px; font-weight: 500; color: var(--color-text-primary); }
+  &__valor--destaque { font-size: 20px; font-weight: 700; }
+  &__valor--pago { color: #2f8f4e; }
+  &__status { font-size: 14px; font-weight: 600; text-transform: capitalize; }
+}
+
+.fatura-pagar {
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 16px;
+  margin-bottom: 20px;
+
+  &__titulo { font-size: 14px; font-weight: 500; margin-bottom: 12px; }
+  &__linha { display: flex; gap: 10px; align-items: center; }
+  &__erro { font-size: 13px; color: var(--color-danger, #e53e3e); margin-top: 8px; }
+  &__sucesso { font-size: 13px; color: #2f8f4e; margin-top: 8px; }
+}
+
+.campo__input {
+  flex: 1;
+  padding: 9px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-input);
+  font-size: 14px;
+  font-family: var(--font-body);
+  color: var(--color-text-primary);
+  background: var(--color-bg-surface);
+  outline: none;
+  &:focus { border-color: var(--color-brand); }
+}
+
+.btn-primario {
+  padding: 9px 18px;
+  background: var(--color-brand);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-pill);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  &:hover:not(:disabled) { opacity: 0.88; }
+  &:disabled { opacity: 0.6; cursor: not-allowed; }
+}
+
+.fatura-lancamentos {
+  &__titulo { font-size: 14px; font-weight: 500; margin-bottom: 12px; }
+}
+
+.fatura-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-border);
+
+  &__descricao { flex: 1; font-size: 14px; color: var(--color-text-primary); }
+  &__data { font-size: 12px; color: var(--color-warm-gray); }
+  &__valor { font-size: 14px; font-weight: 500; color: var(--color-text-primary); }
+}
+
+.estado-vazio { font-size: 14px; color: var(--color-warm-gray); padding: 16px 0; }

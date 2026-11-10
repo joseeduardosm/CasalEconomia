@@ -23,6 +23,8 @@ import {
   heroUsers,
   heroCog6Tooth,
   heroArrowRightOnRectangle,
+  heroNewspaper,
+  heroArrowsRightLeft,
 } from '@ng-icons/heroicons/outline';
 
 import { routes } from './app.routes';
@@ -43,6 +45,8 @@ export const appConfig: ApplicationConfig = {
       heroUsers,
       heroCog6Tooth,
       heroArrowRightOnRectangle,
+      heroNewspaper,
+      heroArrowsRightLeft,
     }),
   ],
 };

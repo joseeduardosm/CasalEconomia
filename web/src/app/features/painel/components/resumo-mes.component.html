@@ -1,0 +1,27 @@
+<div class="resumo-grade">
+  <button class="card card--receitas" (click)="abrirReceitas()">
+    <span class="card__rotulo">Receitas</span>
+    <span class="card__valor">{{ resumo.total_receitas | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
+    <span class="card__sub">Recebido {{ resumo.total_receitas_recebidas | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
+    <span class="card__sub">A receber {{ resumo.a_receber | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
+  </button>
+
+  <button class="card card--despesas" (click)="abrirDespesas()">
+    <span class="card__rotulo">Despesas</span>
+    <span class="card__valor">{{ resumo.total_despesas | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
+    <span class="card__sub">Pago {{ resumo.total_despesas_pagas | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
+    <span class="card__sub">Pendente {{ resumo.a_pagar | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
+  </button>
+
+  <button class="card" [class.card--saldo-positivo]="resumo.saldo >= 0" [class.card--saldo-negativo]="resumo.saldo < 0" (click)="abrirSaldo()">
+    <span class="card__rotulo">Saldo</span>
+    <span class="card__valor">{{ resumo.saldo | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
+    <span class="card__sub">{{ resumo.saldo >= 0 ? 'No positivo' : 'No negativo' }}</span>
+  </button>
+
+  <button class="card card--apagar" (click)="abrirAPagar()">
+    <span class="card__rotulo">A pagar</span>
+    <span class="card__valor">{{ resumo.a_pagar | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
+    <span class="card__sub">em aberto</span>
+  </button>
+</div>

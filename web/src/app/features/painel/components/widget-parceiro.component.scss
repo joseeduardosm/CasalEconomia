@@ -1,0 +1,149 @@
+.widget {
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 16px;
+
+  &__cabecalho {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  &__titulo {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  background: #ef4444;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 999px;
+}
+
+.pendentes-secao {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 10px;
+  margin-bottom: 14px;
+  background: var(--color-bg-page);
+
+  &__rotulo {
+    font-size: 12px;
+    color: var(--color-warm-gray);
+    margin-bottom: 8px;
+  }
+}
+
+.pendente-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--color-border);
+
+  &:last-of-type { border-bottom: none; }
+
+  &__info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  &__descricao {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+  }
+
+  &__meta {
+    font-size: 11px;
+    color: var(--color-warm-gray);
+  }
+
+  &__valor {
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+    color: var(--color-text-primary);
+  }
+
+  &__acoes {
+    display: flex;
+    gap: 4px;
+  }
+}
+
+.btn-aceitar {
+  padding: 4px 10px;
+  background: rgba(34,197,94,0.1);
+  color: #16a34a;
+  border: 1px solid rgba(34,197,94,0.3);
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  &:hover:not(:disabled) { background: rgba(34,197,94,0.2); }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+.btn-ignorar {
+  padding: 4px 10px;
+  background: transparent;
+  color: var(--color-warm-gray);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  cursor: pointer;
+  &:hover:not(:disabled) { border-color: var(--color-warm-gray); }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+.btn-ver-todos {
+  background: none;
+  border: none;
+  color: var(--color-brand);
+  font-size: 12px;
+  cursor: pointer;
+  margin-top: 8px;
+  &:hover { text-decoration: underline; }
+}
+
+.resumo-bilateral {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  &__linha {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__rotulo {
+    font-size: 13px;
+    color: var(--color-warm-gray);
+  }
+
+  &__valor {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+
+    &--receita { color: #22c55e; }
+  }
+}

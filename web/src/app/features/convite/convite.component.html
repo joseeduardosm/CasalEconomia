@@ -1,0 +1,51 @@
+@if (carregando()) {
+  <div class="convite-loading">
+    <p>Carregando convite…</p>
+  </div>
+} @else if (naoEncontrado()) {
+  <div class="convite-wrap">
+    <div class="convite-card">
+      <h1 class="convite-card__titulo">Convite inválido</h1>
+      <p class="convite-card__sub">Este convite não existe ou já foi utilizado.</p>
+      <a routerLink="/login" class="btn-primario">Ir para o login</a>
+    </div>
+  </div>
+} @else {
+  <div class="convite-wrap">
+    <div class="convite-card">
+      <h1 class="convite-card__titulo">Você foi convidado!</h1>
+      <p class="convite-card__sub">
+        Olá, <strong>{{ nomeConvidado() }}</strong>! Crie sua senha para acessar o CasalEconomia.
+      </p>
+
+      <form (ngSubmit)="aceitar()" class="convite-form">
+        <div class="campo">
+          <label class="campo__rotulo">E-mail</label>
+          <input class="campo__input" type="email" [value]="emailConvidado()" readonly />
+        </div>
+
+        <div class="campo">
+          <label class="campo__rotulo">Crie sua senha</label>
+          <input
+            class="campo__input"
+            type="password"
+            placeholder="Mínimo 4 caracteres"
+            [ngModel]="senha()"
+            (ngModelChange)="senha.set($event)"
+            name="senha"
+            required
+            minlength="4"
+          />
+        </div>
+
+        @if (erro()) {
+          <p class="convite-form__erro">{{ erro() }}</p>
+        }
+
+        <button class="btn-primario" type="submit" [disabled]="enviando()">
+          {{ enviando() ? 'Entrando…' : 'Criar conta e entrar' }}
+        </button>
+      </form>
+    </div>
+  </div>
+}
