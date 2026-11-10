@@ -1,6 +1,11 @@
 /**
  * Serviço de autenticação do CasalEconomia.
- * Gerencia o token JWT no localStorage e expõe os métodos de sessão do usuário.
+ * Gerencia a ficha JWT no armazenamento local e expõe os métodos de sessão.
+ *
+ * pq existe: Injectable do Angular é um serviço singleton — uma única instância
+ *            compartilhada por toda a aplicação via injeção de dependência.
+ * para que no projeto: persiste a ficha JWT em localStorage, verifica autenticação
+ *                      e realiza o logout navegando para /login.
  */
 
 import { Injectable, inject } from '@angular/core';

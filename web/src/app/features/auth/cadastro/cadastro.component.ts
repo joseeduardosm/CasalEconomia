@@ -1,8 +1,11 @@
 /**
- * Componente de cadastro do CasalEconomia.
- * Formulário reativo com nome, e-mail e senha.
- * Após sucesso salva o token e navega para /painel.
- * Exibe erro PT-BR quando o e-mail já estiver cadastrado (HTTP 400).
+ * Tela de cadastro do CasalEconomia.
+ * Formulário com nome, e-mail e senha; após sucesso navega para /painel.
+ *
+ * pq existe: ReactiveFormsModule do Angular gerencia formulários com validação
+ *            e estado declarativos, sem manipulação direta do DOM.
+ * para que no projeto: criação de nova conta — coleta dados do usuário,
+ *                      chama /api/auth/registrar e persiste a ficha JWT recebida.
  */
 
 import { Component } from '@angular/core';

@@ -11,6 +11,30 @@ versionamento segue [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
 ---
 
+## [0.3.0] — 10/11/2026
+
+### Adicionado
+
+- `ConchaComponent` (AppShell) — layout raiz para todas as rotas autenticadas: sidebar + barra superior + router-outlet + navegação mobile
+- `NavLateralComponent` — sidebar fixa de 220px com 8 itens de menu, item ativo destacado em ciano (`rgba(59,166,241,0.08)`), botão de logout no rodapé
+- `BarraTopoComponent` — barra superior de 56px com título da rota ativa e seletor de período (mês/ano)
+- `NavMobileComponent` — barra inferior fixa para telas < 768px com os 5 módulos principais
+- `PeriodoService` — signal Angular com `mesAtivo`, `labelPeriodo` e métodos `irParaMesAnterior` / `irParaMesSeguinte`
+- 7 componentes placeholder com carregamento tardio: `LancamentosComponent`, `ContasComponent`, `CartoesComponent`, `MetasComponent`, `RelatoriosComponent`, `CasalComponent`, `ConfiguracoesComponent`
+- Rotas autenticadas aninhadas sob `ConchaComponent` com `authGuard` no pai; `loadComponent` lazy em todos os filhos
+- Ícones Heroicons via `@ng-icons/core@29.10.0` + `@ng-icons/heroicons@29.10.0` (compatíveis com Angular 19)
+- `provideIcons` registrado em `app.config.ts` com todos os ícones usados
+- Convenção de cabeçalho `pq existe / para que no projeto` aplicada em todos os arquivos existentes
+
+### Alterado
+
+- `PainelComponent` — removido botão de logout (agora na sidebar); template simplificado para placeholder
+- `app.routes.ts` — rotas autenticadas migradas para filhas de `ConchaComponent`; rotas públicas permanecem soltas
+- Cabeçalhos de todos os arquivos do projeto atualizados com a seção `pq existe / para que no projeto`
+- Comentários do projeto convertidos para PT-BR puro (sem termos técnicos em inglês onde há equivalente)
+
+---
+
 ## [0.2.0] — 10/11/2026
 
 ### Adicionado
@@ -51,6 +75,7 @@ versionamento segue [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 - Serviços systemd `casaleconomia-api` e `casaleconomia-web` com inicialização automática no boot
 - `.gitignore` cobrindo Python, Node e arquivos de ambiente (`.env`)
 
-[Não lançado]: https://github.com/joseeduardosm/CasalEconomia/compare/v0.2.0...HEAD
+[Não lançado]: https://github.com/joseeduardosm/CasalEconomia/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/joseeduardosm/CasalEconomia/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/joseeduardosm/CasalEconomia/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/joseeduardosm/CasalEconomia/releases/tag/v0.1.0

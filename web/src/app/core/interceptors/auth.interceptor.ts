@@ -1,6 +1,11 @@
 /**
- * Interceptor HTTP de autenticação.
- * Injeta o cabeçalho Authorization em todas as requisições quando o usuário está autenticado.
+ * Interceptador HTTP de autenticação do CasalEconomia.
+ * Injeta o cabeçalho de autorização em todas as requisições autenticadas.
+ *
+ * pq existe: HttpInterceptorFn do Angular intercepta todas as requisições HTTP
+ *            da aplicação antes de enviá-las, permitindo modificação centralizada.
+ * para que no projeto: adiciona automaticamente o cabeçalho "Authorization: Bearer <ficha>"
+ *                      em cada chamada à API, sem precisar repetir em cada serviço.
  */
 
 import { HttpInterceptorFn } from '@angular/common/http';

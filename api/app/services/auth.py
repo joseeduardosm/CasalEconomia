@@ -1,6 +1,13 @@
 """
 Serviço de autenticação do CasalEconomia.
-Responsável por gerar e verificar tokens JWT e por fazer o hash de senhas.
+Responsável por gerar e verificar fichas JWT e por cifrar senhas.
+
+pq existe: python-jose implementa JWT (JSON Web Tokens) — fichas assinadas
+           que provam identidade sem consulta ao banco a cada requisição.
+           passlib/bcrypt cuida do hash unidirecional de senhas.
+para que no projeto: centraliza a lógica de segurança — criação de fichas com
+                     validade de 7 dias, verificação de fichas recebidas e
+                     hash/verificação de senhas dos usuários.
 """
 
 import uuid

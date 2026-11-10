@@ -1,6 +1,11 @@
 """
 Ponto de entrada da API CasalEconomia.
-Instancia o FastAPI, configura CORS e registra os routers da aplicação.
+Instancia o FastAPI, configura CORS e registra os roteadores da aplicação.
+
+pq existe: FastAPI é um framework Python assíncrono de alta performance para APIs
+           REST, com validação automática via Pydantic e documentação embutida.
+para que no projeto: cria a instância central da API, aplica as regras de CORS
+                     para o frontend Angular e registra todas as rotas do sistema.
 """
 
 from fastapi import FastAPI

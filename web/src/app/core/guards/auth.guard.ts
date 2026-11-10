@@ -1,6 +1,11 @@
 /**
- * Guard de autenticação.
- * Redireciona para /login se o usuário não estiver autenticado.
+ * Protetor de rota de autenticação do CasalEconomia.
+ * Bloqueia acesso às telas protegidas se o usuário não estiver autenticado.
+ *
+ * pq existe: CanActivateFn do Angular é uma função protetora de rota —
+ *            executada pelo roteador antes de renderizar qualquer componente filho.
+ * para que no projeto: impede acesso direto via URL às telas do AppShell;
+ *                      redireciona para /login quando não há ficha válida.
  */
 
 import { inject } from '@angular/core';

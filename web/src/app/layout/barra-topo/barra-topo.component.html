@@ -1,0 +1,17 @@
+<header class="barra-topo">
+  <h2 class="barra-topo__titulo">{{ tituloPagina() }}</h2>
+
+  <div class="barra-topo__periodo">
+    <button
+      class="barra-topo__seta"
+      (click)="periodo.irParaMesAnterior()"
+      aria-label="Mês anterior"
+    >‹</button>
+    <span class="barra-topo__label">{{ periodo.labelPeriodo() }}</span>
+    <button
+      class="barra-topo__seta"
+      (click)="periodo.irParaMesSeguinte()"
+      aria-label="Próximo mês"
+    >›</button>
+  </div>
+</header>

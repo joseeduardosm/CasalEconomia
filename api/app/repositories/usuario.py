@@ -1,6 +1,11 @@
 """
-Repositório de acesso a dados para a entidade Usuário.
+Repositório de usuários do CasalEconomia.
 Centraliza todas as operações de banco relacionadas à tabela `users`.
+
+pq existe: Padrão Repositório isola o acesso ao banco do restante da lógica —
+           as camadas acima (serviços, roteadores) não conhecem SQL diretamente.
+para que no projeto: busca usuário por e-mail (usado no login) e cria novos
+                     registros na tabela `users` (usado no cadastro).
 """
 
 from sqlalchemy.orm import Session

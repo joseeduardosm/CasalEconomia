@@ -1,6 +1,11 @@
 """
 Configuração do banco de dados para o CasalEconomia.
-Define o engine de conexão, a fábrica de sessões e a classe Base para os modelos ORM.
+Define o motor de conexão, a fábrica de sessões e a classe Base para os modelos ORM.
+
+pq existe: SQLAlchemy é um ORM Python que abstrai SQL em objetos Python,
+           permitindo consultas tipadas sem escrever SQL diretamente.
+para que no projeto: cria a conexão com PostgreSQL, gerencia o ciclo de vida
+                     das sessões por requisição e fornece a Base para os modelos.
 """
 
 from sqlalchemy import create_engine

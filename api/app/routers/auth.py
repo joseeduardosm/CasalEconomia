@@ -1,6 +1,11 @@
 """
-Router de autenticação do CasalEconomia.
-Expõe os endpoints de registro e login de usuários, retornando tokens JWT.
+Roteador de autenticação do CasalEconomia.
+Expõe as rotas de registro e login de usuários, retornando fichas JWT.
+
+pq existe: APIRouter do FastAPI agrupa rotas relacionadas sob um prefixo comum,
+           mantendo o código organizado por domínio.
+para que no projeto: centraliza /auth/registrar e /auth/entrar, gerenciando
+                     criação de conta e emissão de fichas de acesso.
 """
 
 import uuid

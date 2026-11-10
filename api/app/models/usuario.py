@@ -1,6 +1,11 @@
 """
-Modelo ORM para a tabela de usuários do CasalEconomia.
-Representa cada pessoa cadastrada no sistema, com e-mail único e senha armazenada como hash.
+Modelo ORM da tabela de usuários do CasalEconomia.
+Representa cada pessoa cadastrada, com e-mail único e senha cifrada.
+
+pq existe: SQLAlchemy Mapped/mapped_column é a API moderna do ORM —
+           cada classe Python vira uma tabela, cada atributo vira uma coluna.
+para que no projeto: define a estrutura da tabela `users` no PostgreSQL,
+                     mapeando id, nome, e-mail, hash de senha e data de criação.
 """
 
 from uuid import uuid4

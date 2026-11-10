@@ -1,6 +1,11 @@
 """
-Schemas Pydantic para as rotas de autenticação.
-Definem a forma dos dados de entrada e saída dos endpoints de registro e login.
+Esquemas de dados para as rotas de autenticação do CasalEconomia.
+Definem a forma dos dados de entrada e saída das rotas de registro e login.
+
+pq existe: Pydantic BaseModel valida e converte automaticamente os dados JSON
+           da requisição, gerando erros claros quando os campos são inválidos.
+para que no projeto: contrato de entrada para cadastro (nome+e-mail+senha) e
+                     login (e-mail+senha), e contrato de saída com a ficha JWT.
 """
 
 from pydantic import BaseModel, EmailStr, field_validator

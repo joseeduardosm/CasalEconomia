@@ -1,7 +1,11 @@
 /**
- * Componente de login do CasalEconomia.
- * Formulário reativo com e-mail e senha. Em caso de sucesso navega para /painel.
- * Exibe mensagem verde quando query param 'cadastro=sucesso' estiver presente.
+ * Tela de login do CasalEconomia.
+ * Formulário com e-mail e senha; em caso de sucesso navega para /painel.
+ *
+ * pq existe: ReactiveFormsModule do Angular gerencia formulários com validação
+ *            e estado declarativos, sem manipulação direta do DOM.
+ * para que no projeto: ponto de entrada da sessão autenticada — coleta credenciais,
+ *                      chama /api/auth/entrar e persiste a ficha JWT recebida.
  */
 
 import { Component, OnInit } from '@angular/core';

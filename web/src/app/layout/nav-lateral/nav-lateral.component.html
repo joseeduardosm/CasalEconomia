@@ -1,0 +1,27 @@
+<nav class="nav-lateral">
+  <div class="nav-lateral__marca">
+    <span class="nav-lateral__logo">CasalEconomia</span>
+  </div>
+
+  <ul class="nav-lateral__lista">
+    @for (item of itensMenu; track item.caminho) {
+      <li>
+        <a
+          class="nav-lateral__item"
+          [routerLink]="item.caminho"
+          routerLinkActive="nav-lateral__item--ativo"
+        >
+          <ng-icon [name]="item.icone" class="nav-lateral__icone" />
+          <span>{{ item.rotulo }}</span>
+        </a>
+      </li>
+    }
+  </ul>
+
+  <div class="nav-lateral__rodape">
+    <button class="nav-lateral__sair" (click)="sair()">
+      <ng-icon name="heroArrowRightOnRectangle" class="nav-lateral__icone" />
+      <span>Sair</span>
+    </button>
+  </div>
+</nav>

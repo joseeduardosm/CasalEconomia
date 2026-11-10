@@ -1,0 +1,53 @@
+/*
+ * Barra de navegação inferior para mobile.
+ *
+ * pq existe: position: fixed na parte inferior + z-index garante que a barra
+ *            fique sempre visível independente do conteúdo acima dela.
+ * para que no projeto: navegação dos 5 módulos principais em telas pequenas,
+ *                      ativa apenas abaixo de 768px via CSS do ConchaComponent.
+ */
+
+:host {
+  display: block;
+}
+
+.nav-mobile {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  background-color: var(--color-pure-white);
+  border-top: 1px solid var(--color-stone-border);
+  z-index: 100;
+
+  &__item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    padding: 6px 0;
+    text-decoration: none;
+    color: var(--color-ash-gray);
+    transition: color 0.12s;
+
+    &--ativo {
+      color: var(--color-cyan-signal);
+    }
+  }
+
+  &__icone {
+    width: 20px;
+    height: 20px;
+  }
+
+  &__rotulo {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+}

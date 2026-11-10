@@ -1,0 +1,12 @@
+<nav class="nav-mobile">
+  @for (item of itens; track item.caminho) {
+    <a
+      class="nav-mobile__item"
+      [routerLink]="item.caminho"
+      routerLinkActive="nav-mobile__item--ativo"
+    >
+      <ng-icon [name]="item.icone" class="nav-mobile__icone" />
+      <span class="nav-mobile__rotulo">{{ item.rotulo }}</span>
+    </a>
+  }
+</nav>
