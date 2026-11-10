@@ -1,0 +1,9 @@
+/* Painel placeholder — mesmos tokens do cartão de autenticação */
+@use '../auth/auth-card';
+
+.descricao {
+  font-size: 14px;
+  color: var(--color-warm-gray);
+  line-height: 1.64;
+  margin-bottom: var(--spacing-24);
+}

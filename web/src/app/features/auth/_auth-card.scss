@@ -1,0 +1,146 @@
+/* Estilos compartilhados entre login e cadastro — cartão de autenticação Seline Analytics */
+
+.pagina {
+  min-height: 100vh;
+  background-color: var(--color-stone-canvas);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-24);
+}
+
+.card {
+  background: var(--color-pure-white);
+  border: 1px solid var(--color-stone-border);
+  border-radius: var(--radius-cards);        /* 10px */
+  padding: var(--spacing-24);               /* 24px — token card-padding */
+  width: 100%;
+  max-width: 440px;
+  box-shadow: var(--shadow-md);             /* rgba(0,0,0,0.05) 0px 4px 16px 0px */
+}
+
+/* Marca do produto — label uppercase cyan no topo do card */
+.marca {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-cyan-signal);
+  margin-bottom: var(--spacing-16);
+}
+
+/* Título do card — Inter Tight (substituto Roobert), peso 400, tracking negativo */
+.titulo {
+  font-family: var(--font-heading);
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+  color: var(--color-ink-black);
+  margin-bottom: var(--spacing-24);
+}
+
+/* Avisos de erro e sucesso */
+.aviso {
+  padding: var(--spacing-8) var(--spacing-12);
+  border-radius: var(--radius-icons);       /* 4px — pequeno */
+  font-size: 13px;
+  line-height: 1.53;
+  margin-bottom: var(--spacing-16);
+
+  &--erro {
+    background: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+  }
+
+  &--sucesso {
+    background: #f0fdf4;
+    color: #15803d;
+    border: 1px solid #bbf7d0;
+  }
+}
+
+/* Campo de formulário */
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-12);
+
+  label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-warm-gray);
+    letter-spacing: 0.004em;
+  }
+
+  input {
+    padding: 7px var(--spacing-12);
+    background: var(--color-pure-white);
+    border: 1px solid var(--color-stone-muted);  /* #d6d3d1 — token correto para inputs */
+    border-radius: var(--radius-inputs);         /* 6px */
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.64;
+    color: var(--color-ink-black);
+    outline: none;
+    transition: border-color 0.15s, outline 0.15s;
+
+    &:focus {
+      border-color: transparent;
+      outline: 2px solid var(--color-cyan-signal);
+      outline-offset: 0;
+    }
+
+    &::placeholder {
+      color: var(--color-ash-gray);
+    }
+  }
+}
+
+/* Botão primário — pill shape, fill cyan, borda cyan-edge */
+.botao-primario {
+  width: 100%;
+  padding: 8px var(--spacing-16);
+  background-color: var(--color-cyan-signal);  /* #3ba6f1 */
+  color: #ffffff;
+  border: 1px solid var(--color-cyan-edge);    /* #3398e1 */
+  border-radius: var(--radius-buttons);        /* 9999px — pill obrigatório */
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: var(--spacing-8);
+  transition: background-color 0.15s;
+
+  &:hover:not(:disabled) {
+    background-color: var(--color-cyan-edge);
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+}
+
+/* Rodapé do card — link para a outra tela */
+.rodape {
+  margin-top: var(--spacing-16);
+  font-size: 13px;
+  color: var(--color-warm-gray);
+  text-align: center;
+  line-height: 1.53;
+
+  a {
+    color: var(--color-cyan-signal);
+    text-decoration: none;
+    font-weight: 500;
+
+    &:hover {
+      color: var(--color-cyan-edge);
+      text-decoration: underline;
+    }
+  }
+}

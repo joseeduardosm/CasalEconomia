@@ -1,1 +1,69 @@
-/* You can add global styles to this file, and also import other style files */
+/* Tokens globais do sistema de design Seline Analytics — CasalEconomia */
+
+:root {
+  /* Cores */
+  --color-stone-canvas:  #fafaf9;
+  --color-pure-white:    #ffffff;
+  --color-stone-border:  #e8e6e5;
+  --color-stone-muted:   #d6d3d1;
+  --color-ash-gray:      #a8a29e;
+  --color-warm-gray:     #78716c;
+  --color-ink-black:     #0c0a09;
+  --color-soot:          #1c1917;
+  --color-sky-wash:      #c1e1f7;
+  --color-cyan-signal:   #3ba6f1;
+  --color-cyan-edge:     #3398e1;
+
+  /* Tipografia */
+  --font-heading: 'Inter Tight', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-body:    'Inter', ui-sans-serif, system-ui, sans-serif;
+
+  /* Raios */
+  --radius-tags:         9999px;
+  --radius-cards:        10px;
+  --radius-icons:        4px;
+  --radius-inputs:       6px;
+  --radius-buttons:      9999px;
+  --radius-feature-card: 16px;
+
+  /* Sombras */
+  --shadow-md:     rgba(0, 0, 0, 0.05) 0px 4px 16px 0px;
+  --shadow-sm:     rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -2px;
+  --shadow-subtle: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+  --shadow-xl:     rgba(17, 12, 46, 0.12) 0px 12px 45px 0px;
+
+  /* Espaçamentos */
+  --spacing-4:   4px;
+  --spacing-8:   8px;
+  --spacing-12:  12px;
+  --spacing-16:  16px;
+  --spacing-24:  24px;
+  --spacing-32:  32px;
+  --spacing-40:  40px;
+  --spacing-48:  48px;
+  --spacing-64:  64px;
+  --spacing-80:  80px;
+  --spacing-96:  96px;
+  --spacing-160: 160px;
+}
+
+/* Reset e base */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.64;
+  color: var(--color-ink-black);
+  background-color: var(--color-stone-canvas);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
