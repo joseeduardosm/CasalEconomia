@@ -4,5 +4,5 @@
  */
 export const environment = {
   producao: true,
-  apiUrl: 'https://api.casaleconomia.com.br',
+  apiUrl: '/api',
 };
