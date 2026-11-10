@@ -93,7 +93,38 @@ Configurar com `allow_origins=origens_permitidas`, `allow_credentials=True`, `al
 
 ## NGINX (`nginx/nginx.conf`)
 
-Proxy reverso: `/api/` → `localhost:8000`, todo o resto → `localhost:4200`. Usado em staging/prod; em dev não é necessário.
+**O NGINX é obrigatório e deve estar em operação desde o setup inicial.**
+O acesso ao sistema é sempre pelo IP do servidor na porta 80 — sem portas explícitas na URL.
+
+Proxy reverso:
+- `/api/` → `http://127.0.0.1:8000` (FastAPI)
+- todo o resto → `http://127.0.0.1:4200` (Angular)
+
+A API e o Angular ficam escutando apenas em `127.0.0.1` (loopback) — nunca expostos diretamente.
+Apenas o NGINX expõe a porta 80 para o mundo externo.
+
+### Instalação do NGINX
+
+```bash
+sudo apt-get install -y nginx
+```
+
+### Configuração
+
+Copiar o `nginx/nginx.conf` deste projeto para substituir o default do NGINX:
+
+```bash
+sudo cp nginx/nginx.conf /etc/nginx/sites-available/casaleconomia
+sudo ln -s /etc/nginx/sites-available/casaleconomia /etc/nginx/sites-enabled/casaleconomia
+sudo rm -f /etc/nginx/sites-enabled/default
+sudo nginx -t
+sudo systemctl enable nginx
+sudo systemctl restart nginx
+```
+
+### Serviço systemd
+
+O NGINX já gerencia seu próprio serviço via `nginx.service` — não é necessário criar um unit file manual.
 
 ---
 
