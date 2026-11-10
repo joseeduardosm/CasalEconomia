@@ -1,0 +1,25 @@
+# ── Python / API ──────────────────────────────────────────────────
+api/.venv/
+api/__pycache__/
+api/**/__pycache__/
+api/**/*.pyc
+api/.env
+api/alembic/versions/*.py
+
+# ── Node / Angular ────────────────────────────────────────────────
+web/node_modules/
+web/dist/
+web/.angular/
+web/.env
+
+# ── Sistema ───────────────────────────────────────────────────────
+.DS_Store
+*.log
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# ── Outros ────────────────────────────────────────────────────────
+*.env
+!.env.example
