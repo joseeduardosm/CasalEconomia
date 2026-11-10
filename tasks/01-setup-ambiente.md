@@ -128,6 +128,64 @@ cd web && ng serve
 
 ---
 
+## Serviços systemd (inicialização automática no boot)
+
+Os unit files ficam em `/etc/systemd/system/`. Os arquivos de serviço devem ser criados com o conteúdo abaixo e então instalados:
+
+**`casaleconomia-api.service`**
+```ini
+[Unit]
+Description=CasalEconomia API (FastAPI/uvicorn)
+After=network.target postgresql.service
+
+[Service]
+Type=simple
+User=administrador
+WorkingDirectory=/home/administrador/casalEconomia/api
+EnvironmentFile=/home/administrador/casalEconomia/api/.env
+ExecStart=/home/administrador/casalEconomia/api/.venv/bin/uvicorn app.main:aplicacao --reload --host 127.0.0.1 --port 8000
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+```
+
+**`casaleconomia-web.service`**
+```ini
+[Unit]
+Description=CasalEconomia Web (Angular dev server)
+After=network.target
+
+[Service]
+Type=simple
+User=administrador
+WorkingDirectory=/home/administrador/casalEconomia/web
+ExecStart=/usr/bin/ng serve --host 0.0.0.0 --port 4200 --disable-host-check
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+```
+
+**Instalação (rodar uma vez como root/sudo):**
+```bash
+sudo cp /tmp/casaleconomia-api.service /etc/systemd/system/
+sudo cp /tmp/casaleconomia-web.service /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable casaleconomia-api casaleconomia-web
+sudo systemctl start casaleconomia-api casaleconomia-web
+```
+
+**Verificar status:**
+```bash
+sudo systemctl status casaleconomia-api
+sudo systemctl status casaleconomia-web
+```
+
+---
+
 ## Verificação
 
 - `curl http://localhost:8000/saude` → `{"status":"ok"}`

@@ -1,0 +1,58 @@
+<!-- Tela de Cadastro do CasalEconomia — card centralizado, design Seline Analytics -->
+<div class="pagina">
+  <div class="card">
+    <div class="marca">CasalEconomia</div>
+    <h1 class="titulo">Criar sua conta</h1>
+
+    @if (mensagemErro) {
+      <p class="aviso aviso--erro">{{ mensagemErro }}</p>
+    }
+
+    <form [formGroup]="formulario" (ngSubmit)="enviar()" novalidate>
+      <div class="campo">
+        <label for="nome">Nome</label>
+        <input
+          id="nome"
+          type="text"
+          formControlName="nome"
+          placeholder="Seu nome"
+          autocomplete="name"
+        />
+      </div>
+
+      <div class="campo">
+        <label for="email">E-mail</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          placeholder="voce@exemplo.com"
+          autocomplete="email"
+        />
+      </div>
+
+      <div class="campo">
+        <label for="senha">Senha</label>
+        <input
+          id="senha"
+          type="password"
+          formControlName="senha"
+          placeholder="Mínimo 4 caracteres"
+          autocomplete="new-password"
+        />
+      </div>
+
+      <button
+        type="submit"
+        class="botao-primario"
+        [disabled]="formulario.invalid || carregando"
+      >
+        {{ carregando ? 'Criando conta…' : 'Criar conta' }}
+      </button>
+    </form>
+
+    <p class="rodape">
+      Já tem conta? <a routerLink="/login">Entrar</a>
+    </p>
+  </div>
+</div>

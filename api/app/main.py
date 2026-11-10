@@ -7,6 +7,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.database import configuracoes
+from app.routers.auth import roteador as roteador_auth
 
 # Instância principal da aplicação — nome obrigatório: `aplicacao`
 aplicacao = FastAPI(
@@ -26,6 +27,9 @@ aplicacao.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+aplicacao.include_router(roteador_auth)
 
 
 @aplicacao.get("/saude", tags=["saúde"])
