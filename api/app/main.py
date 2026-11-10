@@ -24,7 +24,7 @@ aplicacao = FastAPI(
 # Lê as origens permitidas do .env e converte para lista
 origens_permitidas = [origem.strip() for origem in configuracoes.CORS_ORIGINS.split(",")]
 
-# Configuração de CORS para permitir o front-end Angular acessar a API
+# Configuração de CORS para permitir que o Angular acesse a API
 aplicacao.add_middleware(
     CORSMiddleware,
     allow_origins=origens_permitidas,

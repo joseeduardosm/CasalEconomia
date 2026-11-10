@@ -406,3 +406,17 @@ The signature typographic move is the inline highlight: one phrase per headline 
   --shadow-subtle: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
   --shadow-xl: rgba(17, 12, 46, 0.12) 0px 12px 45px 0px;
 }
+
+---
+
+## Recursos de Referência
+
+Consultar ao criar novas telas, selecionar ícones ou buscar inspiração visual:
+
+| Recurso | URL | Uso |
+|---------|-----|-----|
+| Rare UI | https://www.rareui.com/ | Componentes UI de alta qualidade |
+| Icon Museum | https://icon.museum/ | Biblioteca e referência de ícones |
+| Magic UI | https://magicui.design/ | Componentes animados e interativos |
+| Spell | https://spell.sh/ | Referências de estilo e design systems |
+| Refero Styles | https://styles.refero.design/ | Referências de estilos e design tokens |
