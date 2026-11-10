@@ -1,9 +1,9 @@
-# Changelog
+# Registro de Mudanças
 
-Todas as mudanças notáveis neste projeto serão documentadas aqui.
+Todas as mudanças notáveis neste projeto estão documentadas aqui.
 
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/),
-versionamento segue [Semantic Versioning](https://semver.org/lang/pt-BR/).
+versionamento segue [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
 ---
 
@@ -11,7 +11,7 @@ versionamento segue [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
 ---
 
-## [0.1.0] — 2026-11-10
+## [0.1.0] — 10/11/2026
 
 ### Adicionado
 
@@ -23,7 +23,7 @@ versionamento segue [Semantic Versioning](https://semver.org/lang/pt-BR/).
 - Projeto Angular 19 gerado via `ng new` com roteamento e SCSS
 - `nginx.conf` para proxy reverso em staging/prod (`/api/` → porta 8000, `/` → porta 4200)
 - Banco de dados `casaleconomia_dev` criado no PostgreSQL 16
-- Serviços systemd `casaleconomia-api` e `casaleconomia-web` com start automático no boot
+- Serviços systemd `casaleconomia-api` e `casaleconomia-web` com inicialização automática no boot
 - `.gitignore` cobrindo Python, Node e arquivos de ambiente (`.env`)
 
 [Não lançado]: https://github.com/joseeduardosm/CasalEconomia/compare/v0.1.0...HEAD
