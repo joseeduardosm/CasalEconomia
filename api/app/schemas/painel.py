@@ -80,6 +80,7 @@ class ParceiroPainel(BaseModel):
 
 
 class RespostaPainel(BaseModel):
+    usuario_nome: str
     resumo_mes: ResumoPainel
     faturas_abertas: list[FaturaAberta]
     proximos_vencimentos: list[ProximoVencimento]

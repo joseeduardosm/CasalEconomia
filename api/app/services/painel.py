@@ -228,7 +228,11 @@ def montar_painel(db: Session, usuario_id: UUID, mes: str) -> RespostaPainel:
                 resumo_receitas=sum(l.valor for l in lancs_parceiro if l.tipo == "receita"),
             )
 
+    usuario = db.query(Usuario).filter(Usuario.id == usuario_id).first()
+    usuario_nome = usuario.nome if usuario else ""
+
     return RespostaPainel(
+        usuario_nome=usuario_nome,
         resumo_mes=resumo,
         faturas_abertas=faturas_abertas,
         proximos_vencimentos=proximos,
