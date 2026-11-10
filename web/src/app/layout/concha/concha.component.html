@@ -1,10 +1,6 @@
-<div class="concha">
-  <app-nav-lateral class="concha__sidebar" />
-  <div class="concha__corpo">
-    <app-barra-topo class="concha__topo" />
-    <main class="concha__conteudo">
-      <router-outlet />
-    </main>
-  </div>
-  <app-nav-mobile class="concha__mobile" />
-</div>
+<!-- AppShell com topbar fixa — sem sidebar, igual ao openmonetis-v2 -->
+<app-barra-topo />
+<main class="concha__conteudo">
+  <router-outlet />
+</main>
+<app-nav-mobile class="concha__mobile" />

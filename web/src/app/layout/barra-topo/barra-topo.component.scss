@@ -1,32 +1,196 @@
 /*
- * Barra superior com título da página e seletor de período.
+ * Topbar principal — header fixo no topo, igual ao openmonetis-v2.
  *
- * pq existe: identificação visual da tela + controle de período sem navegar.
- * para que no projeto: 56px fixos no topo da área de conteúdo; título à
- *                      esquerda, controles de mês/ano à direita.
+ * pq existe: navegação horizontal substitui a sidebar lateral.
+ * para que no projeto: logo + links desktop + seletor de período + logout;
+ *                      backdrop-blur e borda inferior como no openmonetis.
  */
 
 :host {
   display: block;
 }
 
-.barra-topo {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: var(--topbar-height);
-  padding: 0 24px;
-  background: var(--card);
-  border-bottom: 1px solid var(--border);
+.topbar {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 50;
+  border-bottom: 1px solid color-mix(in oklch, var(--border) 60%, transparent);
+  background: color-mix(in oklch, var(--background) 95%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 
-  &__titulo {
-    font-family: var(--font-heading);
-    font-size: 16px;
-    font-weight: 500;
-    letter-spacing: -0.015em;
-    color: var(--foreground);
+  &__inner {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 12px;
+    height: 64px;
+    padding: 0 clamp(1rem, 3vw, 2rem);
+    max-width: 1600px;
+    margin-inline: auto;
   }
 
+  /* Logo */
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: var(--foreground);
+    flex-shrink: 0;
+  }
+
+  &__logo-mark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius-sm);
+    background: var(--primary);
+    color: var(--primary-foreground);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    flex-shrink: 0;
+  }
+
+  &__logo-nome {
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--foreground);
+
+    @media (max-width: 480px) { display: none; }
+  }
+
+  /* Navegação central */
+  &__nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    min-width: 0;
+
+    @media (max-width: 767px) { display: none; }
+  }
+
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    border-radius: var(--radius-sm);
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--muted-foreground);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.1s, color 0.1s;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-body);
+
+    &:hover { background: var(--muted); color: var(--foreground); }
+
+    &--ativo {
+      background: color-mix(in oklch, var(--primary) 10%, var(--background));
+      color: var(--brand-strong);
+    }
+  }
+
+  &__link-badge {
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    background: var(--primary);
+    color: var(--primary-foreground);
+    font-size: 10px;
+    font-weight: 700;
+    border-radius: var(--radius-pill);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Dropdown "Mais" */
+  &__mais {
+    position: relative;
+  }
+
+  &__mais-btn {
+    .topbar__chevron {
+      width: 12px;
+      height: 12px;
+      transition: transform 0.15s;
+    }
+  }
+
+  &__mais--aberto &__chevron {
+    transform: rotate(180deg);
+  }
+
+  &__backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+  }
+
+  &__dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 180px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-lg);
+    z-index: 20;
+    overflow: hidden;
+    padding: 4px;
+  }
+
+  &__dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: var(--radius-sm);
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--muted-foreground);
+    text-decoration: none;
+    transition: background 0.1s, color 0.1s;
+
+    &:hover { background: var(--muted); color: var(--foreground); }
+
+    &--ativo { background: color-mix(in oklch, var(--primary) 10%, var(--background)); color: var(--brand-strong); }
+  }
+
+  &__dropdown-icone {
+    width: 15px;
+    height: 15px;
+    color: inherit;
+    flex-shrink: 0;
+  }
+
+  &__chevron {
+    width: 12px;
+    height: 12px;
+  }
+
+  /* Ações (direita) */
+  &__acoes {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  /* Seletor de período */
   &__periodo {
     display: flex;
     align-items: center;
@@ -37,12 +201,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 28px;
-    height: 28px;
+    width: 26px;
+    height: 26px;
     border-radius: var(--radius-sm);
     background: none;
     border: 1px solid var(--border);
-    font-size: 15px;
+    font-size: 14px;
     color: var(--muted-foreground);
     cursor: pointer;
     line-height: 1;
@@ -55,13 +219,40 @@
     }
   }
 
-  &__label {
-    min-width: 92px;
+  &__periodo-label {
+    min-width: 84px;
     text-align: center;
     font-size: 13px;
     font-weight: 500;
     color: var(--foreground);
     user-select: none;
-    padding: 0 4px;
+    padding: 0 2px;
   }
+
+  /* Botão sair */
+  &__sair {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    background: none;
+    border: 1px solid transparent;
+    color: var(--muted-foreground);
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.1s, color 0.1s, border-color 0.1s;
+
+    &:hover {
+      background: oklch(97% 0.01 20);
+      border-color: color-mix(in oklch, var(--destructive) 20%, transparent);
+      color: var(--destructive);
+    }
+  }
+}
+
+/* Spacer que empurra o conteúdo para baixo do header fixo */
+.topbar-spacer {
+  height: 64px;
 }

@@ -11,6 +11,32 @@ versionamento segue [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
 ---
 
+## [0.9.0] — 10/11/2026
+
+### Adicionado
+
+- **Topbar horizontal** — navegação migrada de sidebar para barra superior fixa, idêntica ao openmonetis-v2
+- `barra-topo.component.ts` — lógica completa: 6 links diretos + dropdown "Mais" (4 itens), seletor de período, logout; fecha dropdown automaticamente no `NavigationEnd`
+- `barra-topo.component.html` — estrutura logo | nav | ações; `position: fixed`, backdrop-blur 12px, borda inferior semitransparente
+- `barra-topo.component.scss` — grid 3 colunas, links com pill hover coral, dropdown com sombra; `.topbar-spacer` de 64px
+
+### Alterado
+
+- `concha.component.ts` — removida importação do `NavLateralComponent`; concha agora usa apenas `BarraTopoComponent` + `NavMobileComponent`
+- `concha.component.html` — estrutura simplificada: `<app-barra-topo>` + `<main>` + `<app-nav-mobile>`; sem `<app-nav-lateral>`
+- `concha.component.scss` — removido flex/sidebar layout; conteúdo ocupa largura total abaixo da topbar
+- `angular.json` — budgets de CSS por componente ajustados para 8kB (warning) / 20kB (error) para acomodar novo design system
+
+### Painel principal (estrutura idêntica ao openmonetis-v2)
+
+- `painel.component.ts` — reescrito com signals: `primeiroNome`, `saudacao`, `dataFormatada`, `itensAtencao` (computed); `aceitar`/`ignorar` pendentes do parceiro
+- `painel.component.html` — saudação + 4 métricas (mobile: card único + lista compacta) + faixa de atenção + grid de 4 widgets inline
+- `painel.component.scss` — `.metricas-grid` 4 colunas ≥1200px; `.atencao-band` com grid 2→4 colunas; `.widgets-grid` 3 colunas ≥1100px; widget com header borda-b + corpo scrollável + footer
+- `api/app/schemas/painel.py` — adicionado campo `usuario_nome: str` ao `RespostaPainel`
+- `api/app/services/painel.py` — `montar_painel()` consulta tabela `Usuario` e popula `usuario_nome`
+
+---
+
 ## [0.8.0] — 10/11/2026
 
 ### Alterado

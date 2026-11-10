@@ -1,17 +1,80 @@
-<header class="barra-topo">
-  <h2 class="barra-topo__titulo">{{ tituloPagina() }}</h2>
+<!-- Topbar fixa — igual ao openmonetis-v2 -->
+<header class="topbar">
+  <div class="topbar__inner">
 
-  <div class="barra-topo__periodo">
-    <button
-      class="barra-topo__seta"
-      (click)="periodo.irParaMesAnterior()"
-      aria-label="Mês anterior"
-    >‹</button>
-    <span class="barra-topo__label">{{ periodo.labelPeriodo() }}</span>
-    <button
-      class="barra-topo__seta"
-      (click)="periodo.irParaMesSeguinte()"
-      aria-label="Próximo mês"
-    >›</button>
+    <!-- Logo (esquerda) -->
+    <a class="topbar__logo" routerLink="/painel">
+      <span class="topbar__logo-mark">CE</span>
+      <span class="topbar__logo-nome">CasalEconomia</span>
+    </a>
+
+    <!-- Navegação desktop (centro) -->
+    <nav class="topbar__nav" aria-label="Navegação principal">
+      @for (item of itensNav; track item.caminho) {
+        <a
+          class="topbar__link"
+          [routerLink]="item.caminho"
+          routerLinkActive="topbar__link--ativo"
+        >
+          {{ item.rotulo }}
+          @if (item.badge && parceiro.totalPendentes() > 0) {
+            <span class="topbar__link-badge">{{ parceiro.totalPendentes() }}</span>
+          }
+        </a>
+      }
+
+      <!-- Dropdown "Mais" -->
+      <div class="topbar__mais" [class.topbar__mais--aberto]="menuAberto()">
+        <button class="topbar__link topbar__mais-btn" (click)="toggleMenu()" type="button">
+          Mais
+          <ng-icon name="heroChevronDown" class="topbar__chevron" />
+        </button>
+        @if (menuAberto()) {
+          <div class="topbar__dropdown" (click)="fecharMenu()">
+            @for (item of itensMais; track item.caminho) {
+              <a
+                class="topbar__dropdown-item"
+                [routerLink]="item.caminho"
+                routerLinkActive="topbar__dropdown-item--ativo"
+              >
+                <ng-icon [name]="item.icone" class="topbar__dropdown-icone" />
+                {{ item.rotulo }}
+                @if (item.badge && parceiro.totalPendentes() > 0) {
+                  <span class="topbar__link-badge">{{ parceiro.totalPendentes() }}</span>
+                }
+              </a>
+            }
+          </div>
+          <div class="topbar__backdrop" (click)="fecharMenu()"></div>
+        }
+      </div>
+    </nav>
+
+    <!-- Ações (direita) -->
+    <div class="topbar__acoes">
+      <!-- Seletor de período -->
+      <div class="topbar__periodo">
+        <button
+          class="topbar__seta"
+          (click)="periodo.irParaMesAnterior()"
+          aria-label="Mês anterior"
+        >‹</button>
+        <span class="topbar__periodo-label">{{ periodo.labelPeriodo() }}</span>
+        <button
+          class="topbar__seta"
+          (click)="periodo.irParaMesSeguinte()"
+          aria-label="Próximo mês"
+        >›</button>
+      </div>
+
+      <!-- Logout -->
+      <button class="topbar__sair" (click)="sair()" aria-label="Sair" type="button">
+        <ng-icon name="heroArrowRightOnRectangle" />
+      </button>
+    </div>
+
   </div>
 </header>
+
+<!-- Spacer para compensar o header fixo -->
+<div aria-hidden="true" class="topbar-spacer"></div>
