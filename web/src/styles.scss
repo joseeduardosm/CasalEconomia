@@ -32,6 +32,18 @@
   --shadow-subtle: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
   --shadow-xl:     rgba(17, 12, 46, 0.12) 0px 12px 45px 0px;
 
+  /* Aliases usados pelos componentes (mapeiam para os design tokens acima) */
+  --color-brand:          var(--color-cyan-signal);
+  --color-border:         var(--color-stone-border);
+  --color-bg-surface:     var(--color-pure-white);
+  --color-bg-page:        var(--color-stone-canvas);
+  --color-text-primary:   var(--color-ink-black);
+  --color-text-secondary: var(--color-warm-gray);
+  --radius-pill:          var(--radius-buttons);
+  --radius-card:          var(--radius-cards);
+  --radius-input:         var(--radius-inputs);
+  --shadow-card:          var(--shadow-md);
+
   /* Espaçamentos */
   --spacing-4:   4px;
   --spacing-8:   8px;
